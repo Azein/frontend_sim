@@ -1,5 +1,5 @@
 import { createAction, createReducer } from 'redux-act'
-import { over, lensPath, map, without } from 'ramda'
+import { over, lensPath, map, without, pipe } from 'ramda'
 
 import generateStartingState from 'world/TaskGeneration'
 import { worldTick } from 'world/WorldState'
@@ -26,7 +26,12 @@ const tasksReducer = createReducer(
         (count) => (count <= 0 ? 0 : count - taskCount),
         state,
       ),
-    [eliminateTask]: (state, { taskId }) => state,
+    [eliminateTask]: (state, { taskId }) =>
+      pipe(
+        over(lensPath(['currentTaskIds']), without([taskId])),
+        over(lensPath(['currentTasks'])),
+      )(state),
+
     [worldTick]: (state, { time }) =>
       over(
         lensPath(['currentTasks']),

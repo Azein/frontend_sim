@@ -1,13 +1,41 @@
+// @flow
+
 import shuffleArray from 'shuffle-array'
 import { pipe, slice, values, reduce, pickBy, drop } from 'ramda'
 import { allKeys, taskCategories } from 'scenes/GameScene/proto/protoTasks'
 
-const generateTaskIdsRange = () => [...Array(20)].map((_, i) => i)
+type TaskCategories = {
+  [number]: {
+    taskId: number,
+    taskName: string,
+  },
+}
 
-const getTaskTimer = (min, max) =>
+type GenerateTaskIdsRange = () => number[]
+const generateTaskIdsRange: GenerateTaskIdsRange = () =>
+  [...Array(20)].map((_, i) => i)
+
+type GetTaskTimer = (number, number) => number
+
+const getTaskTimer: GetTaskTimer = (min, max) =>
   Math.floor(Math.random() * (max - min + 1)) + min
 
-const generateTaskPools = (randomIds, categories) => {
+type TaskPools = {
+  activePool: {
+    [number]: {
+      taskId: number,
+      taskName: string,
+    },
+  },
+  possibleTasks: {
+    [number]: {
+      taskId: number,
+      taskName: string,
+    },
+  },
+}
+type GenerateTaskPools = (number[], TaskCategories) => TaskPools
+const generateTaskPools: GenerateTaskPools = (randomIds, categories) => {
   const activePool = pickBy(
     (_, key) => randomIds.includes(Number(key)),
     categories,
