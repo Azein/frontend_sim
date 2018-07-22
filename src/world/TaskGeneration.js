@@ -20,20 +20,29 @@ type GetTaskTimer = (number, number) => number
 const getTaskTimer: GetTaskTimer = (min, max) =>
   Math.floor(Math.random() * (max - min + 1)) + min
 
-type TaskPools = {
-  activePool: {
-    [number]: {
-      taskId: number,
-      taskName: string,
-    },
-  },
-  possibleTasks: {
-    [number]: {
-      taskId: number,
-      taskName: string,
-    },
+type FormedTask = {
+  key: string,
+  label: string,
+  taskCount: number,
+  timer: number,
+}
+
+type FormedTaskPool = {
+  [string]: FormedTask,
+}
+
+type TaskPool = {
+  [number]: {
+    taskId: number,
+    taskName: string,
   },
 }
+
+type TaskPools = {
+  activePool: TaskPool,
+  possibleTasks: TaskPool,
+}
+
 type GenerateTaskPools = (number[], TaskCategories) => TaskPools
 const generateTaskPools: GenerateTaskPools = (randomIds, categories) => {
   const activePool = pickBy(
@@ -76,7 +85,16 @@ const distributeKeys = (selectedTasks, keysPool) => {
   return result
 }
 
-const generateStartingState = () => {
+type InitialState = {
+  possibleTasks: TaskPool,
+  usedKeys: string[],
+  unusedKeys: string[],
+  currentTaskIds: number[],
+  currentTasks: FormedTaskPool,
+}
+
+type GenerateStartingState = () => InitialState
+const generateStartingState: GenerateStartingState = () => {
   const randomTaskIds = pipe(shuffleArray, slice(0, 8), shuffleArray)(
     generateTaskIdsRange(),
   )

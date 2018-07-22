@@ -1,14 +1,16 @@
+// @flow
+
 import React from 'react'
 import styled from 'styled-components'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { Layout } from 'ui/components/Layout/index'
+import { togglePause, worldTick } from 'world/WorldState'
+import { pausedSelector, timePassedSelector } from 'world/selectors'
 import TaskBox from './components/TaskBox'
 import TimeIndicator from './components/TimeIndicator'
 import { addTasks, resolveTasks, initStartingState } from './ducks'
 import { taskPoolsSelector, existingKeysSelector } from './selectors'
-import { togglePause, worldTick } from 'world/WorldState'
-import { pausedSelector, timePassedSelector } from 'world/selectors'
 
 const mediaSrc = require('./k.mp3')
 
@@ -20,10 +22,23 @@ const MainArea = styled(Layout)`
   flex-wrap: wrap;
   align-items: center;
 `
+type GetRandomPool = (string[]) => string
+const getRandomPool: GetRandomPool = (poolKeys) =>
+  poolKeys[Math.floor(Math.random() * 8)]
 
-const getRandomPool = (poolKeys) => poolKeys[Math.floor(Math.random() * 8)]
+type Props = {
+  addToPool: ({ taskKey: string, taskCount: number }) => void,
+  resolve: ({ taskKey: string, taskCount: number }) => void,
+  startGame: Function,
+  toggleTimers: Function,
+  tick: ({ time: number }) => void,
+  paused: boolean,
+  poolKeys: string[],
+  timePassed: number,
+  taskPools: Array,
+}
 
-class GameScene extends React.Component {
+class GameScene extends React.Component<Props> {
   static mainLoop = null
   static poolTimers = null
   static worldTimer = null
@@ -31,8 +46,7 @@ class GameScene extends React.Component {
   componentDidMount() {
     const { addToPool, resolve, poolKeys, startGame, toggleTimers } = this.props
 
-    document.addEventListener('keydown', (e) => {
-      console.log('xd')
+    document.addEventListener('keydown', (e: Event) => {
       if (poolKeys.includes(e.key)) {
         resolve({
           taskKey: e.key,
@@ -46,7 +60,7 @@ class GameScene extends React.Component {
     // this.startLoops()
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: Props) {
     if (prevProps.paused !== this.props.paused) {
       if (this.props.paused) {
         this.stopLoops()
