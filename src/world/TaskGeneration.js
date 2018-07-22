@@ -3,47 +3,20 @@
 import shuffleArray from 'shuffle-array'
 import { pipe, slice, values, reduce, pickBy, drop } from 'ramda'
 import { allKeys, taskCategories } from 'scenes/GameScene/proto/protoTasks'
+import type {
+  GenerateTaskIdsRange,
+  GetTaskTimer,
+  GenerateTaskPools,
+  KeysAndTasks,
+  InitialState,
+} from './typings'
 
-type TaskCategories = {
-  [number]: {
-    taskId: number,
-    taskName: string,
-  },
-}
-
-type GenerateTaskIdsRange = () => number[]
 const generateTaskIdsRange: GenerateTaskIdsRange = () =>
   [...Array(20)].map((_, i) => i)
-
-type GetTaskTimer = (number, number) => number
 
 const getTaskTimer: GetTaskTimer = (min, max) =>
   Math.floor(Math.random() * (max - min + 1)) + min
 
-type FormedTask = {
-  key: string,
-  label: string,
-  taskCount: number,
-  timer: number,
-}
-
-type FormedTaskPool = {
-  [string]: FormedTask,
-}
-
-type TaskPool = {
-  [number]: {
-    taskId: number,
-    taskName: string,
-  },
-}
-
-type TaskPools = {
-  activePool: TaskPool,
-  possibleTasks: TaskPool,
-}
-
-type GenerateTaskPools = (number[], TaskCategories) => TaskPools
 const generateTaskPools: GenerateTaskPools = (randomIds, categories) => {
   const activePool = pickBy(
     (_, key) => randomIds.includes(Number(key)),
@@ -60,7 +33,7 @@ const generateTaskPools: GenerateTaskPools = (randomIds, categories) => {
   }
 }
 
-const distributeKeys = (selectedTasks, keysPool) => {
+const distributeKeys = (selectedTasks, keysPool): KeysAndTasks => {
   const result = reduce(
     (acc, value) => ({
       currentTasks: {
@@ -85,16 +58,7 @@ const distributeKeys = (selectedTasks, keysPool) => {
   return result
 }
 
-type InitialState = {
-  possibleTasks: TaskPool,
-  usedKeys: string[],
-  unusedKeys: string[],
-  currentTaskIds: number[],
-  currentTasks: FormedTaskPool,
-}
-
-type GenerateStartingState = () => InitialState
-const generateStartingState: GenerateStartingState = () => {
+const generateStartingState = (): InitialState => {
   const randomTaskIds = pipe(shuffleArray, slice(0, 8), shuffleArray)(
     generateTaskIdsRange(),
   )
