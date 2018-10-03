@@ -1,5 +1,7 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import styled from 'styled-components'
+import { eliminateTask } from '../../ducks'
 
 const BoxContainer = styled.div`
   width: 300px;
@@ -42,14 +44,30 @@ const TaskTimer = styled.div`
   left: 10px;
 `
 
-const TaskBox = ({ taskCount, label, timer }) => (
-  <BoxContainer>
-    <Box>
-      <TaskPool taskCount={taskCount} />
-      <TaskTimer> {timer} </TaskTimer>
-    </Box>
-    <BoxLabel>{label}</BoxLabel>
-  </BoxContainer>
-)
+class TaskBox extends React.Component {
+  componentDidUpdate() {
+    const { removeTask, taskId, taskKey, timer } = this.props
+    if (timer === 0) {
+      removeTask({ taskId, taskKey })
+    }
+  }
+  render() {
+    const { taskCount, label, timer, taskId, taskKey } = this.props
+    return (
+      <BoxContainer>
+        <Box>
+          <TaskPool taskCount={taskCount} />
+          <TaskTimer> {timer} </TaskTimer>
+        </Box>
+        <BoxLabel>{label}</BoxLabel>
+      </BoxContainer>
+    )
+  }
+}
 
-export default TaskBox
+export default connect(
+  null,
+  {
+    removeTask: eliminateTask,
+  },
+)(TaskBox)

@@ -12,18 +12,19 @@ export type GenerateTaskIdsRange = () => number[]
 export type GetTaskTimer = (number, number) => number
 
 export type FormedTask = {
-  key: string,
+  taskKey: string,
   label: string,
   taskCount: number,
+  taskId: number,
   timer: number,
 }
 
 export type FormedTaskPool = {
-  [string]: FormedTask,
+  [key: string]: FormedTask,
 }
 
 export type TaskPool = {
-  [number]: {
+  [taskId: string]: {
     taskId: number,
     taskName: string,
   },
@@ -42,10 +43,10 @@ export type KeysAndTasks = {
   currentTasks: FormedTask[],
 }
 
-export type InitialState = {
+export type TasksState = {
   possibleTasks: TaskPool,
   usedKeys: string[],
   unusedKeys: string[],
-  currentTaskIds: number[],
   currentTasks: FormedTaskPool,
 }
+//   currentTaskIds: number[],

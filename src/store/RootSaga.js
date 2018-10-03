@@ -1,5 +1,6 @@
-import { all } from 'redux-saga'
+import { fork } from 'redux-saga/effects'
+import gameSaga from '../scenes/GameScene/saga'
 
 export default function* rootSaga() {
-  yield all([])
+  yield fork(gameSaga)
 }

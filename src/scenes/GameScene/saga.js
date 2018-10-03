@@ -3,7 +3,8 @@ import { takeEvery, put } from 'redux-saga/effects'
 import { eliminateTask, generateTask } from './ducks'
 
 function* eliminationWatcher() {
-  yield delay(2500)
+  yield delay(2000)
+  console.log('WOO')
   yield put(generateTask())
 }
 

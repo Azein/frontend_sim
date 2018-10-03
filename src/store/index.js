@@ -1,5 +1,9 @@
 import { createStore, applyMiddleware, compose } from 'redux'
+import createSagaMiddleware from 'redux-saga'
 import rootReducer from './RootReducer'
+import rootSaga from './RootSaga'
+
+const sagaMiddleware = createSagaMiddleware()
 
 const logger = (store) => (next) => (action) => {
   console.log('dispatching', action)
@@ -9,7 +13,13 @@ const logger = (store) => (next) => (action) => {
 }
 
 const configureStore = () => {
-  const store = createStore(rootReducer, compose(applyMiddleware(logger)))
+  // const store = createStore(rootReducer, compose(applyMiddleware(logger)))
+  // const store = createStore(rootReducer)
+  const store = createStore(
+    rootReducer,
+    compose(applyMiddleware(sagaMiddleware)),
+  )
+  sagaMiddleware.run(rootSaga)
   return store
 }
 

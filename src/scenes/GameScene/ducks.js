@@ -1,7 +1,17 @@
 import { createAction, createReducer } from 'redux-act'
-import { over, lensPath, map, without, pipe } from 'ramda'
+import {
+  over,
+  lensPath,
+  map,
+  without,
+  dissoc,
+  assoc,
+  pipe,
+  append,
+} from 'ramda'
 
-import generateStartingState from 'world/TaskGeneration'
+import generateStartingState, { generateTaskPool } from 'world/TaskGeneration'
+import { taskCategories } from 'scenes/GameScene/proto/protoTasks'
 import { worldTick } from 'world/WorldState'
 
 export const addTasks = createAction('tasksLoop/addTasks')
@@ -26,14 +36,20 @@ const tasksReducer = createReducer(
         (count) => (count <= 0 ? 0 : count - taskCount),
         state,
       ),
-    [eliminateTask]: (state, { taskId }) =>
+    [eliminateTask]: (state, { taskId, taskKey }) =>
       pipe(
-        over(lensPath(['currentTaskIds']), without([taskId])),
-        over(lensPath(['currentTasks'])),
+        over(lensPath(['currentTasks']), dissoc(taskKey)),
+        over(
+          lensPath(['possibleTasks']),
+          assoc(taskId, taskCategories[taskId]),
+        ),
+        over(lensPath(['usedKeys']), without([taskKey])),
+        over(lensPath(['unusedKeys']), append(taskKey)),
       )(state),
-
-    [worldTick]: (state, { time }) =>
-      over(
+    [generateTask]: (state) => generateTaskPool(state),
+    [worldTick]: (state, { time }) => {
+      console.log('tick')
+      return over(
         lensPath(['currentTasks']),
         (tasks) =>
           map(
@@ -44,7 +60,8 @@ const tasksReducer = createReducer(
             tasks,
           ),
         state,
-      ),
+      )
+    },
   },
   generateStartingState(),
 )

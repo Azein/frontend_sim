@@ -1,20 +1,33 @@
 // @flow
 
 import shuffleArray from 'shuffle-array'
-import { pipe, slice, values, reduce, pickBy, drop } from 'ramda'
+import {
+  pipe,
+  slice,
+  values,
+  reduce,
+  pickBy,
+  drop,
+  without,
+  append,
+  prop,
+  head,
+  dissoc,
+  assoc,
+} from 'ramda'
 import { allKeys, taskCategories } from 'scenes/GameScene/proto/protoTasks'
 import type {
   GenerateTaskIdsRange,
   GetTaskTimer,
   GenerateTaskPools,
   KeysAndTasks,
-  InitialState,
+  TasksState,
 } from './typings'
 
 const generateTaskIdsRange: GenerateTaskIdsRange = () =>
   [...Array(20)].map((_, i) => i)
 
-const getTaskTimer: GetTaskTimer = (min, max) =>
+const getMinMax: GetTaskTimer = (min, max) =>
   Math.floor(Math.random() * (max - min + 1)) + min
 
 const generateTaskPools: GenerateTaskPools = (randomIds, categories) => {
@@ -39,10 +52,11 @@ const distributeKeys = (selectedTasks, keysPool): KeysAndTasks => {
       currentTasks: {
         ...acc.currentTasks,
         [acc.unusedKeys[0]]: {
-          key: acc.unusedKeys[0],
+          taskKey: acc.unusedKeys[0],
           label: `${acc.unusedKeys[0].toUpperCase()} - ${value.taskName}`,
           taskCount: 0,
-          timer: getTaskTimer(30, 120),
+          timer: getMinMax(5, 15),
+          taskId: value.taskId,
         },
       },
       usedKeys: [...acc.usedKeys, acc.unusedKeys[0]],
@@ -58,10 +72,12 @@ const distributeKeys = (selectedTasks, keysPool): KeysAndTasks => {
   return result
 }
 
-const generateStartingState = (): InitialState => {
-  const randomTaskIds = pipe(shuffleArray, slice(0, 8), shuffleArray)(
-    generateTaskIdsRange(),
-  )
+const generateStartingState = (): TasksState => {
+  const randomTaskIds = pipe(
+    shuffleArray,
+    slice(0, 8),
+    shuffleArray,
+  )(generateTaskIdsRange())
   const { activePool, possibleTasks } = generateTaskPools(
     randomTaskIds,
     taskCategories,
@@ -75,8 +91,45 @@ const generateStartingState = (): InitialState => {
     possibleTasks,
     usedKeys,
     unusedKeys,
-    currentTaskIds: randomTaskIds,
+    // currentTaskIds: randomTaskIds,
     currentTasks,
+  }
+}
+
+type GetRandomKey = (string[]) => string
+const getRandomKey: GetRandomKey = pipe(
+  shuffleArray,
+  head,
+)
+
+const getNewId = pipe(
+  values,
+  shuffleArray,
+  head,
+  prop('taskId'),
+)
+
+const generateTask = (id, key) => ({
+  taskKey: key,
+  label: `${key.toUpperCase()} - ${taskCategories[id].taskName}`,
+  taskCount: 0,
+  timer: getMinMax(30, 120),
+})
+
+type GenerateTaskPool = (TasksState) => TasksState
+
+export const generateTaskPool: GenerateTaskPool = (state) => {
+  const { possibleTasks, usedKeys, unusedKeys, currentTasks } = state
+  const newKey = getRandomKey(unusedKeys)
+  const newTaskId = getNewId(possibleTasks)
+  const newTask = generateTask(newTaskId, newKey)
+
+  return {
+    possibleTasks: dissoc(newTaskId, possibleTasks),
+    currentTasks: assoc(newKey, newTask, currentTasks),
+    //  currentTaskIds: without([newTaskId], currentTaskIds),
+    usedKeys: append(newKey, usedKeys),
+    unusedKeys: without([newKey], unusedKeys),
   }
 }
 
