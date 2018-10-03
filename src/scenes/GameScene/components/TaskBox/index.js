@@ -1,7 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { eliminateTask } from '../../ducks'
+import { eliminateTask, initStartingState } from '../../ducks'
+import { togglePause } from 'world/WorldState'
 
 const BoxContainer = styled.div`
   width: 300px;
@@ -46,7 +47,26 @@ const TaskTimer = styled.div`
 
 class TaskBox extends React.Component {
   componentDidUpdate() {
-    const { removeTask, taskId, taskKey, timer } = this.props
+    const {
+      removeTask,
+      taskId,
+      taskKey,
+      timer,
+      restartGame,
+      taskCount,
+      pause,
+    } = this.props
+    // TODO - pause bug
+    // TODO - taskName bug
+    if (taskCount === 100) {
+      if (
+        window.confirm(
+          'Не смог, не справился, был слишком тупым, уволен. Попробовать снова?',
+        )
+      ) {
+        restartGame()
+      }
+    }
     if (timer === 0) {
       removeTask({ taskId, taskKey })
     }
@@ -69,5 +89,7 @@ export default connect(
   null,
   {
     removeTask: eliminateTask,
+    restartGame: initStartingState,
+    pause: togglePause,
   },
 )(TaskBox)

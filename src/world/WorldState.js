@@ -11,9 +11,9 @@ const initialState = {
 
 const worldReducer = createReducer(
   {
-    [togglePause]: (state) => ({
+    [togglePause]: (state, payload) => ({
       ...state,
-      paused: !state.paused,
+      paused: payload ? payload.mode : !state.paused,
     }),
     [worldTick]: (state, { time }) => ({
       ...state,
