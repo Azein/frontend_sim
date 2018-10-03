@@ -48,7 +48,6 @@ const tasksReducer = createReducer(
       )(state),
     [generateTask]: (state) => generateTaskPool(state),
     [worldTick]: (state, { time }) => {
-      console.log('tick')
       return over(
         lensPath(['currentTasks']),
         (tasks) =>

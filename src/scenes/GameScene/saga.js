@@ -4,7 +4,6 @@ import { eliminateTask, generateTask } from './ducks'
 
 function* eliminationWatcher() {
   yield delay(2000)
-  console.log('WOO')
   yield put(generateTask())
 }
 

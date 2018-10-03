@@ -49,11 +49,11 @@ class GameScene extends React.Component<Props> {
   static poolKeys = []
 
   componentDidMount() {
-    const { resolve, poolKeys, startGame, toggleTimers } = this.props
+    const { resolve, poolKeys, toggleTimers } = this.props
     this.poolKeys = poolKeys
 
     document.addEventListener('keydown', (e: Event) => {
-      if (poolKeys.includes(e.key)) {
+      if (this.poolKeys.includes(e.key)) {
         resolve({
           taskKey: `${e.key}`,
           taskCount: 5,
