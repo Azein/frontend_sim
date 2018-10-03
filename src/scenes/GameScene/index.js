@@ -49,20 +49,10 @@ class GameScene extends React.Component<Props> {
   static poolKeys = []
 
   componentDidMount() {
-    const { resolve, poolKeys, toggleTimers } = this.props
+    const { poolKeys } = this.props
     this.poolKeys = poolKeys
 
-    document.addEventListener('keydown', (e: Event) => {
-      if (this.poolKeys.includes(e.key)) {
-        resolve({
-          taskKey: `${e.key}`,
-          taskCount: 5,
-        })
-      }
-      if (e.keyCode === 32) {
-        toggleTimers()
-      }
-    })
+    document.addEventListener('keydown', this.handleKeyDown)
     // this.startLoops()
   }
 
@@ -74,6 +64,24 @@ class GameScene extends React.Component<Props> {
       } else {
         this.startLoops()
       }
+    }
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown)
+  }
+
+  handleKeyDown = (e: Event) => {
+    const { resolve, toggleTimers } = this.props
+    const { poolKeys } = this
+    if (poolKeys.includes(e.key)) {
+      resolve({
+        taskKey: `${e.key}`,
+        taskCount: 5,
+      })
+    }
+    if (e.keyCode === 32) {
+      toggleTimers()
     }
   }
 
@@ -95,7 +103,7 @@ class GameScene extends React.Component<Props> {
       }
 
       this.startMainLoop()
-    }, 300)
+    }, 200)
   }
 
   startWorldTimer() {

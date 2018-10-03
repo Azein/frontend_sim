@@ -55,7 +55,7 @@ const distributeKeys = (selectedTasks, keysPool): KeysAndTasks => {
           taskKey: acc.unusedKeys[0],
           label: `${acc.unusedKeys[0].toUpperCase()} - ${value.taskName}`,
           taskCount: 0,
-          timer: getMinMax(5, 15),
+          timer: getMinMax(30, 60),
           taskId: value.taskId,
         },
       },
@@ -91,7 +91,6 @@ const generateStartingState = (): TasksState => {
     possibleTasks,
     usedKeys,
     unusedKeys,
-    // currentTaskIds: randomTaskIds,
     currentTasks,
   }
 }
@@ -113,7 +112,7 @@ const generateTask = (id, key) => ({
   taskKey: key,
   label: `${key.toUpperCase()} - ${taskCategories[id].taskName}`,
   taskCount: 0,
-  timer: getMinMax(30, 120),
+  timer: getMinMax(30, 60),
 })
 
 type GenerateTaskPool = (TasksState) => TasksState
@@ -127,7 +126,6 @@ export const generateTaskPool: GenerateTaskPool = (state) => {
   return {
     possibleTasks: dissoc(newTaskId, possibleTasks),
     currentTasks: assoc(newKey, newTask, currentTasks),
-    //  currentTaskIds: without([newTaskId], currentTaskIds),
     usedKeys: append(newKey, usedKeys),
     unusedKeys: without([newKey], unusedKeys),
   }
