@@ -4,9 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "chance": "^1.0.16",
     "normalize.css": "^8.0.0",
-    "phaser": "3.10.1",
     "polished": "^1.9.2",
     "ramda": "^0.25.0",
     "react": "^16.4.1",
