@@ -16,20 +16,17 @@ import {
   assoc,
 } from 'ramda'
 import { allKeys, taskCategories } from 'scenes/GameScene/proto/protoTasks'
-import type {
-  GenerateTaskIdsRange,
-  GetTaskTimer,
-  GenerateTaskPools,
-  KeysAndTasks,
-  TasksState,
-} from './typings'
 
+type GenerateTaskIdsRange = () => number[]
 const generateTaskIdsRange: GenerateTaskIdsRange = () =>
   [...Array(20)].map((_, i) => i)
+
+type GetTaskTimer = (number, number) => number
 
 const getMinMax: GetTaskTimer = (min, max) =>
   Math.floor(Math.random() * (max - min + 1)) + min
 
+type GenerateTaskPools = (number[], TaskCategories) => TaskPools
 const generateTaskPools: GenerateTaskPools = (randomIds, categories) => {
   const activePool = pickBy(
     (_, key) => randomIds.includes(Number(key)),
@@ -44,6 +41,12 @@ const generateTaskPools: GenerateTaskPools = (randomIds, categories) => {
     activePool,
     possibleTasks,
   }
+}
+
+type KeysAndTasks = {
+  usedKeys: string[],
+  unusedKeys: string[],
+  currentTasks: FormedTask[],
 }
 
 const distributeKeys = (selectedTasks, keysPool): KeysAndTasks => {

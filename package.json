@@ -27,7 +27,9 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.1",
     "eslint-config-kupibilet": "^9.3.0",
+    "eslint-plugin-flowtype": "^3.0.0",
     "flow-bin": "^0.74.0"
   }
 }

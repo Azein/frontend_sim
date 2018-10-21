@@ -1,9 +1,16 @@
 {
-  "extends": "kupibilet",
+  "extends": ["kupibilet", "plugin:flowtype/recommended"],
+  "parser": "babel-eslint",
+  "plugins": ["flowtype"],
   "rules": {
-   "max-len": ["error", { "code": 80 }],
-   "import/no-unresolved": 0,
-   "import/extensions": 0,
-   "import/prefer-default-export": 0,
+    "max-len": ["error", { "code": 80 }],
+    "import/no-unresolved": 0,
+    "import/extensions": 0,
+    "import/prefer-default-export": 0
+  },
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": true
     }
+  }
 }
