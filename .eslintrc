@@ -1,5 +1,5 @@
 {
-  "extends": ["kupibilet", "plugin:flowtype/recommended"],
+  "extends": ["airbnb", "plugin:flowtype/recommended"],
   "parser": "babel-eslint",
   "plugins": ["flowtype"],
   "rules": {
