@@ -49,4 +49,3 @@ export type TasksState = {
   unusedKeys: string[],
   currentTasks: FormedTaskPool,
 }
-//   currentTaskIds: number[],

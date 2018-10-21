@@ -113,6 +113,7 @@ const generateTask = (id, key) => ({
   label: `${key.toUpperCase()} - ${taskCategories[id].taskName}`,
   taskCount: 0,
   timer: getMinMax(30, 60),
+  taskId: id,
 })
 
 type GenerateTaskPool = (TasksState) => TasksState
