@@ -128,7 +128,7 @@ class GameScene extends React.Component<Props> {
     const { taskPools, timePassed } = this.props;
     return (
       <SceneLayout>
-        <audio src={mediaSrc} />
+        <audio src={mediaSrc} autoPlay />
         <TimeIndicator time={timePassed} />
         <MainArea>
           {taskPools.map(taskPool => (
