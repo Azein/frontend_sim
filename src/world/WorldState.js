@@ -1,13 +1,20 @@
-import { createAction, createReducer } from 'redux-act'
-import { add } from 'ramda'
+// @flow
 
-export const togglePause = createAction('worldState/togglePause')
-export const worldTick = createAction('worldState/worldTick')
+import { createAction, createReducer } from 'redux-act';
+import { add } from 'ramda';
 
-const initialState = {
+export const togglePause = createAction('worldState/togglePause');
+export const worldTick = createAction('worldState/worldTick');
+
+type InitialState = {
+  paused: boolean,
+  timePassed: number,
+};
+
+const initialState: InitialState = {
   paused: true,
   timePassed: 0,
-}
+};
 
 const worldReducer = createReducer(
   {
@@ -21,6 +28,6 @@ const worldReducer = createReducer(
     }),
   },
   initialState,
-)
+);
 
-export default worldReducer
+export default worldReducer;

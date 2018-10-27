@@ -15,7 +15,7 @@ import {
   dissoc,
   assoc,
 } from 'ramda';
-import { allKeys, taskCategories } from 'scenes/GameScene/proto/protoTasks';
+import { allKeys, taskCategories } from './proto/protoTasks';
 
 type GenerateTaskIdsRange = () => number[];
 const generateTaskIdsRange: GenerateTaskIdsRange = () =>
