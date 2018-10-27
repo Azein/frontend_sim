@@ -21,6 +21,6 @@ const initialState: InitialState = {
   skills: [],
 };
 
-const playerReducer = createReducer(initialState);
+const playerReducer = createReducer({}, initialState);
 
 export default playerReducer;

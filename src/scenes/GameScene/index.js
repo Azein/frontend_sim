@@ -1,34 +1,33 @@
 // @flow
 
-import React from 'react'
-import styled from 'styled-components'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import shuffleArray from 'shuffle-array'
-import { head, pipe } from 'ramda'
-import { Layout } from 'ui/components/Layout/index'
-import { togglePause, worldTick } from 'world/WorldState'
-import { pausedSelector, timePassedSelector } from 'world/selectors'
-import TaskBox from './components/TaskBox'
-import TimeIndicator from './components/TimeIndicator'
-import { addTasks, resolveTasks, initStartingState } from './ducks'
-import { taskPoolsSelector, existingKeysSelector } from './selectors'
+import React from 'react';
+import styled from 'styled-components';
+import { connect } from 'react-redux';
+import shuffleArray from 'shuffle-array';
+import { head, pipe } from 'ramda';
+import { Layout } from 'ui/components/Layout/index';
+import { togglePause, worldTick } from 'world/WorldState';
+import { pausedSelector, timePassedSelector } from 'world/selectors';
+import TaskBox from './components/TaskBox';
+import TimeIndicator from './components/TimeIndicator';
+import { addTasks, resolveTasks, initStartingState } from './ducks';
+import { taskPoolsSelector, existingKeysSelector } from './selectors';
 
-const mediaSrc = require('./k.mp3')
+const mediaSrc = require('./k.mp3');
 
 const SceneLayout = styled(Layout)`
   padding: 20px;
-`
+`;
 const MainArea = styled(Layout)`
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-`
-type GetRandomPool = (string[]) => string
+`;
+type GetRandomPool = (string[]) => string;
 const getRandomPool: GetRandomPool = pipe(
   shuffleArray,
   head,
-)
+);
 
 type Props = {
   addToPool: ({ taskKey: string, taskCount: number }) => void,
@@ -40,119 +39,119 @@ type Props = {
   poolKeys: string[],
   timePassed: number,
   taskPools: Array,
-}
+};
 
 class GameScene extends React.Component<Props> {
-  static mainLoop = null
-  static poolTimers = null
-  static worldTimer = null
-  static poolKeys = []
+  static mainLoop = null;
+
+  static poolTimers = null;
+
+  static worldTimer = null;
+
+  static poolKeys = [];
 
   componentDidMount() {
-    const { poolKeys } = this.props
-    this.poolKeys = poolKeys
+    const { poolKeys } = this.props;
+    this.poolKeys = poolKeys;
 
-    document.addEventListener('keydown', this.handleKeyDown)
+    document.addEventListener('keydown', this.handleKeyDown);
     // this.startLoops()
   }
 
   componentDidUpdate(prevProps: Props) {
-    this.poolKeys = this.props.poolKeys
-    if (prevProps.paused !== this.props.paused) {
-      if (this.props.paused) {
-        this.stopLoops()
+    const { paused, poolKeys } = this.props;
+    this.poolKeys = poolKeys;
+    if (prevProps.paused !== paused) {
+      if (paused) {
+        this.stopLoops();
       } else {
-        this.startLoops()
+        this.startLoops();
       }
     }
   }
 
   componentWillUnmount() {
-    document.removeEventListener('keydown', this.handleKeyDown)
+    document.removeEventListener('keydown', this.handleKeyDown);
   }
 
   handleKeyDown = (e: Event) => {
-    const { resolve, toggleTimers } = this.props
-    const { poolKeys } = this
-    if (poolKeys.includes(e.key)) {
+    const { resolve, toggleTimers } = this.props;
+    const { poolKeys } = this;
+    const { key, keyCode, repeat } = e;
+    if (!repeat && poolKeys.includes(key)) {
       resolve({
-        taskKey: `${e.key}`,
+        taskKey: `${key}`,
         taskCount: 5,
-      })
+      });
     }
-    if (e.keyCode === 32) {
-      toggleTimers()
+    if (keyCode === 32) {
+      toggleTimers();
     }
-  }
+  };
 
   stopLoops() {
-    clearTimeout(this.mainLoop)
-    clearTimeout(this.worldTimer)
-    // clearTimeout(this.poolTimers)
+    clearTimeout(this.mainLoop);
+    clearTimeout(this.worldTimer);
   }
 
   startMainLoop() {
-    const { poolKeys, addToPool } = this.props
+    const { addToPool } = this.props;
     this.mainLoop = setTimeout(() => {
-      const poolsExist = this.poolKeys.length > 0
+      const poolsExist = this.poolKeys.length > 0;
       if (poolsExist) {
         addToPool({
           taskKey: getRandomPool(this.poolKeys),
           taskCount: 5,
-        })
+        });
       }
 
-      this.startMainLoop()
-    }, 200)
+      this.startMainLoop();
+    }, 200);
   }
 
   startWorldTimer() {
-    const { tick } = this.props
+    const { tick } = this.props;
     this.worldTimer = setTimeout(() => {
       tick({
         time: 1,
-      })
-      this.startWorldTimer()
-    }, 1000)
+      });
+      this.startWorldTimer();
+    }, 1000);
   }
 
   startLoops() {
-    this.startMainLoop()
-    this.startWorldTimer()
+    this.startMainLoop();
+    this.startWorldTimer();
   }
 
   render() {
-    const { taskPools, timePassed } = this.props
+    const { taskPools, timePassed } = this.props;
     return (
       <SceneLayout>
         <audio src={mediaSrc} />
         <TimeIndicator time={timePassed} />
         <MainArea>
-          {taskPools.map((taskPool) => (
+          {taskPools.map(taskPool => (
             <TaskBox key={taskPool.taskId} {...taskPool} />
           ))}
         </MainArea>
       </SceneLayout>
-    )
+    );
   }
 }
 
 export default connect(
-  (state) => ({
+  state => ({
     taskPools: taskPoolsSelector(state),
     poolKeys: existingKeysSelector(state),
     paused: pausedSelector(state),
     timePassed: timePassedSelector(state),
   }),
-  (dispatch) =>
-    bindActionCreators(
-      {
-        addToPool: addTasks,
-        resolve: resolveTasks,
-        startGame: initStartingState,
-        toggleTimers: togglePause,
-        tick: worldTick,
-      },
-      dispatch,
-    ),
-)(GameScene)
+  {
+    addToPool: addTasks,
+    resolve: resolveTasks,
+    startGame: initStartingState,
+    toggleTimers: togglePause,
+    tick: worldTick,
+  },
+)(GameScene);
