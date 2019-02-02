@@ -10,7 +10,9 @@ import {
   append,
 } from 'ramda'
 
-import generateStartingState, { generateTaskPool } from 'world/TaskGeneration'
+import generateStartingState, {
+  generateTaskPool,
+} from '@/world/task-generation'
 import { taskCategories } from 'world/proto/protoTasks'
 import { worldTick } from 'world/WorldState'
 

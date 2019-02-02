@@ -1,13 +1,21 @@
 import styled from '@/styled-components'
+import { ThemeInterface } from '@/styled-components/theme'
 import { control } from '@/ui/utils/reset'
 
-const bgColors = {
+const bgColors: {
+[colorKey: string]: string
+} = {
   primaryBlue: 'darkerBlue',
   primaryTeal: 'darkerTeal',
 }
 
-const getHoverBackground = ({ theme, background }) =>
-  theme.color[bgColors[background]]
+const getHoverBackground = ({
+  theme,
+  background,
+}: {
+theme: ThemeInterface
+background: string
+}) => theme.color[bgColors[background]]
 
 export const StyledButton = styled('button')<{
 background: string

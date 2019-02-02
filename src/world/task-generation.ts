@@ -1,5 +1,3 @@
-// @flow
-
 import shuffleArray from 'shuffle-array'
 import {
   pipe,
