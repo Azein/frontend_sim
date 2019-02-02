@@ -23,32 +23,33 @@ const MainArea = styled(Layout)`
   flex-wrap: wrap;
   align-items: center;
 `
+
 type GetRandomPool = (a: Array<any>) => any
 const getRandomPool: GetRandomPool = pipe(
   shuffleArray,
   head,
 )
 
-type Props = {
-  addToPool: ({ taskKey: string, taskCount: number }) => void
-  resolve: ({ taskKey: string, taskCount: number }) => void
+interface Props {
+  addToPool: (Payload: { taskKey: string; taskCount: number }) => void
+  resolve: (Payload: { taskKey: string; taskCount: number }) => void
   startGame: Function
   toggleTimers: Function
-  tick: ({ time: number }) => void
+  tick: (Payload: { time: number }) => void
   paused: boolean
   poolKeys: string[]
   timePassed: number
-  taskPools: Array
+  taskPools: Array<any>
 }
 
 class GameScene extends React.Component<Props> {
-  static mainLoop = null
+  mainLoop: null | any = null
 
-  static poolTimers = null
+  poolTimers: null | any = null
 
-  static worldTimer = null
+  worldTimer: null | any = null
 
-  static poolKeys = []
+  poolKeys: string[] = []
 
   componentDidMount() {
     const { poolKeys } = this.props
@@ -74,7 +75,7 @@ class GameScene extends React.Component<Props> {
     document.removeEventListener('keydown', this.handleKeyDown)
   }
 
-  handleKeyDown = (e: Event) => {
+  handleKeyDown = (e: KeyboardEvent) => {
     const { resolve, toggleTimers } = this.props
     const { poolKeys } = this
     const { key, keyCode, repeat } = e

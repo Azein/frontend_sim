@@ -1,3 +1,3 @@
 declare module 'shuffle-array' {
-  export type ShuffleArray = (a: Array<any>) => Array<any>
+  export type ShuffleArray = <T>(a: Array<T>, ...rest) => Array<T>
 }
