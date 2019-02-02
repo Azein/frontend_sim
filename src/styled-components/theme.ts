@@ -1,3 +1,9 @@
+export interface ThemeInterface {
+  color: {
+    [key: string]: string
+  }
+}
+
 const color = {
   textWhite: '#fff',
   primaryBlue: '#2979FF',

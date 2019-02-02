@@ -1,7 +1,7 @@
 // @flow
 
 import React from 'react'
-import styled from 'styled-components'
+import styled from '@/styled-components'
 import { connect } from 'react-redux'
 import shuffleArray from 'shuffle-array'
 import { head, pipe } from 'ramda'

@@ -1,11 +1,9 @@
-// @flow
-
-type DevGrades = {
+interface DevGrades {
   [gradeName: string]: {
-    name: string,
-    reqLevel: number,
-  },
-};
+    name: string
+    reqLevel: number
+  }
+}
 
 const devGrades: DevGrades = {
   junior: {
@@ -20,6 +18,6 @@ const devGrades: DevGrades = {
     name: 'Сеньор',
     reqLevel: 18,
   },
-};
+}
 
-export default devGrades;
+export default devGrades

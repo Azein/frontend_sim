@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import { control } from 'ui/utils/reset'
+import styled from '@/styled-components'
+import { control } from '@/ui/utils/reset'
 
 const bgColors = {
   primaryBlue: 'darkerBlue',
@@ -9,7 +9,9 @@ const bgColors = {
 const getHoverBackground = ({ theme, background }) =>
   theme.color[bgColors[background]]
 
-const StyledButton = styled.button`
+export const StyledButton = styled('button')<{
+background: string
+}>`
   ${control};
 
   height: 40px;
@@ -24,14 +26,14 @@ const StyledButton = styled.button`
   }
 `
 
-const TextLayer = styled.div`
+export const TextLayer = styled.div`
   position: absolute;
   background: none;
   z-index: 20;
   transition: all 0.3s;
 `
 
-const AnimationLayer = styled.div`
+export const AnimationLayer = styled.div`
   position: absolute;
   width: 200%;
   height: 0;
@@ -42,7 +44,9 @@ const AnimationLayer = styled.div`
   transition: all 0.3s;
 `
 
-const AnimatedContainer = styled.button`
+export const AnimatedContainer = styled('button')<{
+background: string
+}>`
   ${control} position: relative;
   overflow: hidden;
   width: 200px;
@@ -70,7 +74,3 @@ const AnimatedContainer = styled.button`
     }
   }
 `
-
-export { AnimatedContainer, TextLayer, AnimationLayer }
-
-export default StyledButton

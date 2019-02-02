@@ -834,7 +834,7 @@
   version "23.3.13"
   resolved "https://registry.yarnpkg.com/@types/jest/-/jest-23.3.13.tgz#c81484b6f4ca007bb09887ed15ecb3286d58f928"
 
-"@types/node@^10.12.21":
+"@types/node@*", "@types/node@^10.12.21":
   version "10.12.21"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-10.12.21.tgz#7e8a0c34cf29f4e17a36e9bd0ea72d45ba03908e"
 
@@ -864,6 +864,14 @@
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.7.22.tgz#5bc6d166d5ac34b835756f0b736c7b1af0043e81"
   dependencies:
     "@types/prop-types" "*"
+    csstype "^2.2.0"
+
+"@types/styled-components@^4.1.6":
+  version "4.1.6"
+  resolved "https://registry.yarnpkg.com/@types/styled-components/-/styled-components-4.1.6.tgz#9aa1d47dbc6bae540083869bcc6c639c6e9af0fe"
+  dependencies:
+    "@types/node" "*"
+    "@types/react" "*"
     csstype "^2.2.0"
 
 "@types/tapable@1.0.2":

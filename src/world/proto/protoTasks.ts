@@ -1,5 +1,3 @@
-// @flow
-
 export const allKeys: string[] = [
   'q',
   'w',
@@ -13,7 +11,7 @@ export const allKeys: string[] = [
   'f',
   'g',
   'h',
-];
+]
 
 /* eslint-disable */
 export const taskCategories: TaskPool = {
@@ -101,4 +99,4 @@ export const taskCategories: TaskPool = {
     taskId: 20,
     taskName: 'Почитать stackoverflow',
   },
-};
+}

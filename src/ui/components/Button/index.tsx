@@ -1,13 +1,14 @@
 import React from 'react'
-import StyledButton, {
+import {
+  StyledButton,
   AnimatedContainer,
   TextLayer,
   AnimationLayer,
 } from './styled'
 
-type Props = {
-  children: Element
-  background?: string
+interface Props {
+  children: React.ReactNode
+  background: string
 }
 
 const Button = ({ children, background, ...props }: Props) => (
