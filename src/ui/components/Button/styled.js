@@ -20,7 +20,7 @@ const StyledButton = styled.button`
   align-items: center;
   cursor: pointer;
   &:hover {
-    background: ${(props) => getHoverBackground(props)};
+    background: ${props => getHoverBackground(props)};
   }
 `
 

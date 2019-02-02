@@ -1,8 +1,8 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import styled from 'styled-components'
-import { eliminateTask, initStartingState } from '../../ducks'
 import { togglePause } from 'world/WorldState'
+import { eliminateTask, initStartingState } from '../../ducks'
 
 const BoxContainer = styled.div`
   width: 300px;
@@ -71,13 +71,16 @@ class TaskBox extends React.Component {
       removeTask({ taskId, taskKey })
     }
   }
+
   render() {
-    const { taskCount, label, timer, taskId, taskKey } = this.props
+    const {
+      taskCount, label, timer, taskId, taskKey,
+    } = this.props
     return (
       <BoxContainer>
         <Box>
           <TaskPool taskCount={taskCount} />
-          <TaskTimer> {timer} </TaskTimer>
+          <TaskTimer>{timer}</TaskTimer>
         </Box>
         <BoxLabel>{label}</BoxLabel>
       </BoxContainer>

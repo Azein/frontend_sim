@@ -1,11 +1,13 @@
-// @flow
-
 import React from 'react'
-import StyledButton, { AnimatedContainer, TextLayer, AnimationLayer } from './styled'
+import StyledButton, {
+  AnimatedContainer,
+  TextLayer,
+  AnimationLayer,
+} from './styled'
 
 type Props = {
-  children: Element,
-  background?: string,
+  children: Element
+  background?: string
 }
 
 const Button = ({ children, background, ...props }: Props) => (

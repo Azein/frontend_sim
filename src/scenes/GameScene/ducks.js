@@ -1,6 +1,4 @@
-// @flow
-
-import { createAction, createReducer } from 'redux-act';
+import { createAction, createReducer } from 'redux-act'
 import {
   over,
   lensPath,
@@ -10,18 +8,18 @@ import {
   assoc,
   pipe,
   append,
-} from 'ramda';
+} from 'ramda'
 
-import generateStartingState, { generateTaskPool } from 'world/TaskGeneration';
-import { taskCategories } from 'world/proto/protoTasks';
-import { worldTick } from 'world/WorldState';
+import generateStartingState, { generateTaskPool } from 'world/TaskGeneration'
+import { taskCategories } from 'world/proto/protoTasks'
+import { worldTick } from 'world/WorldState'
 
-export const addTasks = createAction('tasksLoop/addTasks');
-export const resolveTasks = createAction('tasksLoop/resolveTasks');
-export const initStartingState = createAction('tasksLoop/initStartingState');
-export const startMainLoop = createAction('tasksLoop/startMainLoop');
-export const eliminateTask = createAction('tasksLoop/eliminateTask');
-export const generateTask = createAction('tasksLoop/generateTask');
+export const addTasks = createAction('tasksLoop/addTasks')
+export const resolveTasks = createAction('tasksLoop/resolveTasks')
+export const initStartingState = createAction('tasksLoop/initStartingState')
+export const startMainLoop = createAction('tasksLoop/startMainLoop')
+export const eliminateTask = createAction('tasksLoop/eliminateTask')
+export const generateTask = createAction('tasksLoop/generateTask')
 
 const tasksReducer = createReducer(
   {
@@ -64,6 +62,6 @@ const tasksReducer = createReducer(
       ),
   },
   generateStartingState(),
-);
+)
 
-export default tasksReducer;
+export default tasksReducer

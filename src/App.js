@@ -2,7 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import * as theme from 'ui/theme'
-import { Layout } from './ui/components/Layout/'
+import { Layout } from './ui/components/Layout'
 import GameScene from './scenes/GameScene/index'
 
 const App = () => (
