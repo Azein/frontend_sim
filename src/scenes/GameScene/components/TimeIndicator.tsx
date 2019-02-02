@@ -9,6 +9,10 @@ const Container = styled.div`
   right: 20px;
 `
 
-const TimeIndicator = ({ time }) => <Container>{time}</Container>
+interface Props {
+  time: number;
+}
+
+const TimeIndicator = ({ time }: Props) => <Container>{time}</Container>
 
 export default TimeIndicator
