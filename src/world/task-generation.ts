@@ -66,7 +66,7 @@ const distributeKeys: DistributeKeys = (selectedTasks, keysPool) =>
           taskKey: acc.unusedKeys[0],
           label: `${acc.unusedKeys[0].toUpperCase()} - ${value.taskName}`,
           taskCount: 0,
-          timer: getMinMax(30, 60),
+          timer: getMinMax(2, 20),
           taskId: value.taskId,
         },
       },
@@ -131,7 +131,7 @@ const generateTask: GenerateTask = (id, key) => ({
   taskKey: key,
   label: `${key.toUpperCase()} - ${taskCategories[id].taskName}`,
   taskCount: 0,
-  timer: getMinMax(30, 60),
+  timer: getMinMax(2, 20),
   taskId: id,
 })
 

@@ -13,8 +13,8 @@ import {
 import generateStartingState, {
   generateTaskPool,
 } from '@/world/task-generation'
-import { taskCategories } from 'world/proto/protoTasks'
-import { worldTick } from 'world/WorldState'
+import { taskCategories } from '@/world/proto/protoTasks'
+import { worldTick } from '@/world/WorldState'
 
 export const addTasks = createAction('tasksLoop/addTasks')
 export const resolveTasks = createAction('tasksLoop/resolveTasks')
@@ -24,21 +24,22 @@ export const eliminateTask = createAction('tasksLoop/eliminateTask')
 export const generateTask = createAction('tasksLoop/generateTask')
 
 const tasksReducer = createReducer(
+  // @ts-ignore
   {
-    [initStartingState]: () => generateStartingState(),
-    [addTasks]: (state, { taskKey, taskCount }) =>
+    [initStartingState.getType()]: () => generateStartingState(),
+    [addTasks.getType()]: (state, { taskKey, taskCount }) =>
       over(
         lensPath(['currentTasks', taskKey, 'taskCount']),
         count => (count >= 100 ? 100 : count + taskCount),
         state,
       ),
-    [resolveTasks]: (state, { taskKey, taskCount }) =>
+    [resolveTasks.getType()]: (state, { taskKey, taskCount }) =>
       over(
         lensPath(['currentTasks', taskKey, 'taskCount']),
         count => (count <= 0 ? 0 : count - taskCount),
         state,
       ),
-    [eliminateTask]: (state, { taskId, taskKey }) =>
+    [eliminateTask.getType()]: (state, { taskId, taskKey }) =>
       pipe(
         over(lensPath(['currentTasks']), dissoc(taskKey)),
         over(
@@ -48,8 +49,8 @@ const tasksReducer = createReducer(
         over(lensPath(['usedKeys']), without([taskKey])),
         over(lensPath(['unusedKeys']), append(taskKey)),
       )(state),
-    [generateTask]: state => generateTaskPool(state),
-    [worldTick]: (state, { time }) =>
+    [generateTask.getType()]: state => generateTaskPool(state),
+    [worldTick.getType()]: (state, { time }) =>
       over(
         lensPath(['currentTasks']),
         tasks =>
