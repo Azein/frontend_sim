@@ -73,9 +73,7 @@ class TaskBox extends React.Component {
   }
 
   render() {
-    const {
-      taskCount, label, timer, taskId, taskKey,
-    } = this.props
+    const { taskCount, label, timer } = this.props
     return (
       <BoxContainer>
         <Box>
