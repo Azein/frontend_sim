@@ -1,51 +1,23 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import styled from '@/styled-components'
-import { togglePause } from 'world/WorldState'
+import { togglePause } from '@/world/WorldState'
 import { eliminateTask, initStartingState } from '../../ducks'
+import {
+  BoxContainer, Box, TaskPool, BoxLabel, TaskTimer,
+} from './styled'
 
-const BoxContainer = styled.div`
-  width: 300px;
-  height: 240px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`
+interface Props {
+  removeTask: (payload: { taskId: number; taskKey: string }) => void
+  taskId: number
+  taskKey: string
+  timer: number
+  restartGame: () => void
+  taskCount: number
+  pause: () => void
+  label: string
+}
 
-const Box = styled.div`
-  position: relative;
-  width: 100px;
-  height: 200px;
-  border: 5px solid black;
-  border-top: none;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-`
-
-const TaskPool = styled.div`
-  width: 100%;
-  background-color: red;
-  height: ${({ taskCount }) => `${taskCount}%`};
-`
-
-const BoxLabel = styled.div`
-  height: 40px;
-  width: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-const TaskTimer = styled.div`
-  position: absolute;
-  font-size: 20px;
-  color: black;
-  top: 10px;
-  left: 10px;
-`
-
-class TaskBox extends React.Component {
+class TaskBox extends React.Component<Props> {
   componentDidUpdate() {
     const {
       removeTask,
