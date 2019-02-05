@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { togglePause } from '@/world/WorldState'
 import { eliminateTask, initStartingState } from '../../ducks'
 import {
-  BoxContainer, Box, TaskPool, BoxLabel, TaskTimer,
+  Container, TaskCard, TaskPool, TaskText, TaskTimer,
 } from './styled'
 
 interface Props {
@@ -47,13 +47,13 @@ class TaskBox extends React.Component<Props> {
   render() {
     const { taskCount, label, timer } = this.props
     return (
-      <BoxContainer>
-        <Box>
+      <Container>
+        <TaskCard>
+          <TaskText>{label}</TaskText>
           <TaskPool taskCount={taskCount} />
           <TaskTimer>{timer}</TaskTimer>
-        </Box>
-        <BoxLabel>{label}</BoxLabel>
-      </BoxContainer>
+        </TaskCard>
+      </Container>
     )
   }
 }

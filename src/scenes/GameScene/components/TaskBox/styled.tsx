@@ -1,6 +1,7 @@
 import styled from '@/styled-components'
+import TimeIndicator from '../TimeIndicator'
 
-export const BoxContainer = styled.div`
+export const Container = styled.div`
   width: 300px;
   height: 240px;
   display: flex;
@@ -9,15 +10,15 @@ export const BoxContainer = styled.div`
   align-items: center;
 `
 
-export const Box = styled.div`
+export const TaskCard = styled.div`
   position: relative;
-  width: 100px;
+  width: 260px;
   height: 200px;
-  border: 5px solid black;
-  border-top: none;
+  border: ${({ theme }) => `2px solid ${theme.color.cardBorder}`};
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  border-radius: 8px;
+  padding: 4px;
 `
 
 export const TaskPool = styled('div')<{
@@ -28,17 +29,16 @@ taskCount: number
   height: ${({ taskCount }) => `${taskCount}%`};
 `
 
-export const BoxLabel = styled.div`
-  height: 40px;
-  width: 300px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+export const TaskText = styled.p`
+  flex-grow: 0;
+  flex-shrink: 0;
+  padding: 0;
+  margin: 2px;
+  font-size: 16px;
 `
-export const TaskTimer = styled.div`
+export const TaskTimer = styled(TimeIndicator)`
   position: absolute;
-  font-size: 20px;
-  color: black;
-  top: 10px;
-  left: 10px;
+  bottom: 10px;
+  right: 10px;
+  flex-grow: 0;
 `

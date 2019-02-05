@@ -64,7 +64,7 @@ const distributeKeys: DistributeKeys = (selectedTasks, keysPool) =>
         ...acc.currentTasks,
         [acc.unusedKeys[0]]: {
           taskKey: acc.unusedKeys[0],
-          label: `${acc.unusedKeys[0].toUpperCase()} - ${value.taskName}`,
+          label: value.taskName,
           taskCount: 0,
           timer: getMinMax(2, 20),
           taskId: value.taskId,
@@ -129,7 +129,7 @@ type GenerateTask = (id: number, key: string) => FormedTask
 
 const generateTask: GenerateTask = (id, key) => ({
   taskKey: key,
-  label: `${key.toUpperCase()} - ${taskCategories[id].taskName}`,
+  label: taskCategories[id].taskName,
   taskCount: 0,
   timer: getMinMax(2, 20),
   taskId: id,

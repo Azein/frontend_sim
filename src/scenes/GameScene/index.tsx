@@ -9,7 +9,6 @@ import { Layout } from '@/ui/components/Layout'
 import { togglePause, worldTick } from '@/world/WorldState'
 import { pausedSelector, timePassedSelector } from '@/world/selectors'
 import TaskBox from './components/TaskBox'
-import TimeIndicator from './components/TimeIndicator'
 import { addTasks, resolveTasks, initStartingState } from './ducks'
 import { taskPoolsSelector, existingKeysSelector } from './selectors'
 
@@ -21,7 +20,8 @@ const SceneLayout = styled(Layout)`
 const MainArea = styled(Layout)`
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
+  justify-content: flex-start;
+  height: auto;
 `
 
 type GetRandomPool = (a: Array<any>) => any
@@ -130,7 +130,6 @@ class GameScene extends React.Component<Props> {
     return (
       <SceneLayout>
         <audio src={mediaSrc} autoPlay />
-        <TimeIndicator time={timePassed} />
         <MainArea>
           {taskPools.map(taskPool => (
             <TaskBox key={taskPool.taskId} {...taskPool} />

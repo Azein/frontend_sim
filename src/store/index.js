@@ -14,8 +14,8 @@ const configureStore = () => {
     rootReducer,
 
     compose(
-      reduxDevTools,
       applyMiddleware(sagaMiddleware),
+      reduxDevTools,
     ),
   )
   sagaMiddleware.run(rootSaga)

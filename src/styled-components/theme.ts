@@ -4,16 +4,25 @@ export interface ThemeInterface {
   }
 }
 
+const colorPrimitives = {
+  blueGray: {
+    lightest: '#ECEFF1',
+    lighter: '#CFD8DC',
+    light: '#B0BEC5',
+    semilight: '#90A4AE',
+    400: '#78909C',
+    500: '#607D8B',
+    600: '#546E7A',
+    700: '#455A64',
+    800: '#37474F',
+    900: '#263238',
+  },
+  white: '#fff',
+}
+
 const color = {
-  textWhite: '#fff',
-  primaryBlue: '#2979FF',
-  darkerBlue: '#2962FF',
-  lightestTeal: '#B2DFDB',
-  lightestBlue: '#B3E5FC',
-  primaryTeal: '#009688',
-  darkerTeal: '#00796B',
-  darkerGrey: '#424242',
-  darkestGrey: '#212121',
+  textWhite: colorPrimitives.white,
+  cardBorder: colorPrimitives.blueGray.lighter,
 }
 
 export { color }
