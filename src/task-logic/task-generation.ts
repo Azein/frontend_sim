@@ -13,16 +13,13 @@ import {
   dissoc,
   assoc,
 } from 'ramda'
-import { allKeys, taskCategories } from './proto/protoTasks'
+import { getMinMax } from '@/utils'
+import { allKeys, taskCategories } from './protoTasks'
+import { generateTask } from './generate-task'
 
 type GenerateTaskIdsRange = () => number[]
 const generateTaskIdsRange: GenerateTaskIdsRange = () =>
   [...Array(20)].map((_, i) => i)
-
-type GetTaskTimer = (min: number, max: number) => number
-
-const getMinMax: GetTaskTimer = (min, max) =>
-  Math.floor(Math.random() * (max - min + 1)) + min
 
 type GenerateTaskPools = (
   randomIds: number[],
@@ -62,13 +59,11 @@ const distributeKeys: DistributeKeys = (selectedTasks, keysPool) =>
     (acc, value) => ({
       currentTasks: {
         ...acc.currentTasks,
-        [acc.unusedKeys[0]]: {
-          taskKey: acc.unusedKeys[0],
-          label: value.taskName,
-          taskCount: 0,
-          timer: getMinMax(2, 20),
-          taskId: value.taskId,
-        },
+        [acc.unusedKeys[0]]: generateTask({
+          key: acc.unusedKeys[0],
+          taskName: value.taskName,
+          id: value.taskId,
+        }),
       },
       usedKeys: [...acc.usedKeys, head(acc.unusedKeys)],
       unusedKeys: drop(1, acc.unusedKeys),
@@ -125,16 +120,6 @@ const getNewId = pipe(
   prop('taskId'),
 )
 
-type GenerateTask = (id: number, key: string) => FormedTask
-
-const generateTask: GenerateTask = (id, key) => ({
-  taskKey: key,
-  label: taskCategories[id].taskName,
-  taskCount: 0,
-  timer: getMinMax(2, 20),
-  taskId: id,
-})
-
 type GenerateTaskPool = (state: TasksState) => TasksState
 
 export const generateTaskPool: GenerateTaskPool = (state) => {
@@ -143,7 +128,7 @@ export const generateTaskPool: GenerateTaskPool = (state) => {
   } = state
   const newKey = getRandomKey(unusedKeys)
   const newTaskId = getNewId(possibleTasks)
-  const newTask = generateTask(newTaskId, newKey)
+  const newTask = generateTask({ id: newTaskId, key: newKey })
 
   return {
     possibleTasks: dissoc(newTaskId, possibleTasks),

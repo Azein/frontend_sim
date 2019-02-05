@@ -12,8 +12,8 @@ import {
 
 import generateStartingState, {
   generateTaskPool,
-} from '@/world/task-generation'
-import { taskCategories } from '@/world/proto/protoTasks'
+} from '@/task-logic/task-generation'
+import { taskCategories } from '@/task-logic/protoTasks'
 import { worldTick } from '@/world/WorldState'
 
 export const addTasks = createAction('tasksLoop/addTasks')

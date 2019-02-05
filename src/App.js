@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { ThemeProvider } from '@/styled-components'
 import * as theme from '@/styled-components/theme'
 import { Layout } from './ui/components/Layout'
-import GameScene from './scenes/GameScene/index'
+import GameScene from '@/views/GameScene/index'
 
 const App = () => (
   <Router>
