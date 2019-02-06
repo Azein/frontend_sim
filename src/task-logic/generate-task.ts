@@ -1,5 +1,5 @@
 import { getMinMax } from '@/utils'
-import { taskCategories } from './protoTasks'
+import { allTasksMap as taskCategories } from './proto-tasks'
 
 const DEFAULT_TIME_RANGE = [2, 20]
 const DEFAULT_TASK_COUNT = 0
@@ -12,7 +12,7 @@ type GenerateTask = (
     taskCount,
     taskName,
   }: {
-  id: number
+  id: string
   key: string
   timeRange?: [number, number]
   taskCount?: number

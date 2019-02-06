@@ -13,7 +13,7 @@ import {
 import generateStartingState, {
   generateTaskPool,
 } from '@/task-logic/task-generation'
-import { taskCategories } from '@/task-logic/protoTasks'
+import { allTasksMap as taskCategories } from '@/task-logic/proto-tasks'
 import { worldTick } from '@/world/WorldState'
 
 export const addTasks = createAction('tasksLoop/addTasks')

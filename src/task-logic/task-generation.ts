@@ -13,34 +13,10 @@ import {
   dissoc,
   assoc,
 } from 'ramda'
-import { getMinMax } from '@/utils'
-import { allKeys, taskCategories } from './protoTasks'
+import { allTasksMap as taskCategories } from './proto-tasks'
+import { allKeys } from '@/controls-logic'
 import { generateTask } from './generate-task'
-
-type GenerateTaskIdsRange = () => number[]
-const generateTaskIdsRange: GenerateTaskIdsRange = () =>
-  [...Array(20)].map((_, i) => i)
-
-type GenerateTaskPools = (
-  randomIds: number[],
-  categories: TaskCategories,
-) => TaskPools
-
-const generateTaskPools: GenerateTaskPools = (randomIds, categories) => {
-  const activePool: TaskPool = pickBy(
-    (_, key) => randomIds.includes(Number(key)),
-    categories,
-  )
-  const possibleTasks: TaskPool = pickBy(
-    (_, key) => !randomIds.includes(Number(key)),
-    categories,
-  )
-
-  return {
-    activePool,
-    possibleTasks,
-  }
-}
+import { generateTaskPools } from './generate-task-pools'
 
 type KeysAndTasks = {
   usedKeys: string[]
@@ -76,27 +52,17 @@ const distributeKeys: DistributeKeys = (selectedTasks, keysPool) =>
     values(selectedTasks),
   )
 
-type GetRandomTaskIds = (ids: number[]) => number[]
-
-const getRandomTaskIds: GetRandomTaskIds = pipe(
-  shuffleArray,
-  slice(0, 8),
-  shuffleArray,
-)
-
 type GenerateStartingState = () => TasksState
 
 const generateStartingState: GenerateStartingState = () => {
-  const taskIdsRange = generateTaskIdsRange()
-  const randomTaskIds = getRandomTaskIds(taskIdsRange)
-  const { activePool, possibleTasks } = generateTaskPools(
-    randomTaskIds,
-    taskCategories,
-  )
+  const { activePool, possibleTasks } = generateTaskPools(taskCategories)
+  console.info(activePool, allKeys)
   const { usedKeys, unusedKeys, currentTasks } = distributeKeys(
     activePool,
     allKeys,
   )
+
+  console.info(currentTasks)
 
   return {
     possibleTasks,
