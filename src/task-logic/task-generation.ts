@@ -1,10 +1,8 @@
 import shuffleArray from 'shuffle-array'
 import {
   pipe,
-  slice,
   values,
   reduce,
-  pickBy,
   drop,
   without,
   append,
@@ -56,13 +54,10 @@ type GenerateStartingState = () => TasksState
 
 const generateStartingState: GenerateStartingState = () => {
   const { activePool, possibleTasks } = generateTaskPools(taskCategories)
-  console.info(activePool, allKeys)
   const { usedKeys, unusedKeys, currentTasks } = distributeKeys(
     activePool,
     allKeys,
   )
-
-  console.info(currentTasks)
 
   return {
     possibleTasks,
