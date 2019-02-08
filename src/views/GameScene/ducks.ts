@@ -16,8 +16,8 @@ import generateStartingState, {
 import { allTasksMap as taskCategories } from '@/task-logic/proto-tasks'
 import { worldTick } from '@/world/WorldState'
 
-export const addTasks = createAction('tasksLoop/addTasks')
-export const resolveTasks = createAction('tasksLoop/resolveTasks')
+// export const addTasks = createAction('tasksLoop/addTasks')
+export const addTaskProgress = createAction('tasksLoop/addTaskProgress')
 export const initStartingState = createAction('tasksLoop/initStartingState')
 export const startMainLoop = createAction('tasksLoop/startMainLoop')
 export const eliminateTask = createAction('tasksLoop/eliminateTask')
@@ -27,13 +27,7 @@ const tasksReducer = createReducer(
   // @ts-ignore
   {
     [initStartingState.getType()]: () => generateStartingState(),
-    [addTasks.getType()]: (state, { taskKey, taskCount }) =>
-      over(
-        lensPath(['currentTasks', taskKey, 'taskCount']),
-        count => (count >= 100 ? 100 : count + taskCount),
-        state,
-      ),
-    [resolveTasks.getType()]: (state, { taskKey, taskCount }) =>
+    [addTaskProgress.getType()]: (state, { taskKey, taskCount }) =>
       over(
         lensPath(['currentTasks', taskKey, 'taskCount']),
         count => (count <= 0 ? 0 : count - taskCount),
@@ -68,3 +62,12 @@ const tasksReducer = createReducer(
 )
 
 export default tasksReducer
+
+/*
+    [addTasks.getType()]: (state, { taskKey, taskCount }) =>
+      over(
+        lensPath(['currentTasks', taskKey, 'taskCount']),
+        count => (count >= 100 ? 100 : count + taskCount),
+        state,
+      ),
+*/

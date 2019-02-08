@@ -3,13 +3,12 @@
 import React from 'react'
 import styled from '@/styled-components'
 import { connect } from 'react-redux'
-import shuffleArray from 'shuffle-array'
-import { head, pipe } from 'ramda'
 import { Layout } from '@/ui/components/Layout'
+import { getRandomElement } from '@/utils'
 import { togglePause, worldTick } from '@/world/WorldState'
 import { pausedSelector, timePassedSelector } from '@/world/selectors'
 import TaskBox from './components/TaskBox'
-import { addTasks, resolveTasks, initStartingState } from './ducks'
+import { addTaskProgress, initStartingState } from './ducks'
 import { taskPoolsSelector, existingKeysSelector } from './selectors'
 
 const mediaSrc = require('./k.mp3')
@@ -24,15 +23,8 @@ const MainArea = styled(Layout)`
   height: auto;
 `
 
-type GetRandomPool = (a: Array<any>) => any
-const getRandomPool: GetRandomPool = pipe(
-  shuffleArray,
-  head,
-)
-
 interface Props {
-  addToPool: (Payload: { taskKey: string; taskCount: number }) => void
-  resolve: (Payload: { taskKey: string; taskCount: number }) => void
+  addProgress: (Payload: { taskKey: string; taskCount: number }) => void
   startGame: Function
   toggleTimers: Function
   tick: (Payload: { time: number }) => void
@@ -43,8 +35,6 @@ interface Props {
 }
 
 class GameScene extends React.Component<Props> {
-  mainLoop: null | any = null
-
   poolTimers: null | any = null
 
   worldTimer: null | any = null
@@ -76,11 +66,11 @@ class GameScene extends React.Component<Props> {
   }
 
   handleKeyDown = (e: KeyboardEvent) => {
-    const { resolve, toggleTimers } = this.props
+    const { addProgress, toggleTimers } = this.props
     const { poolKeys } = this
     const { key, keyCode, repeat } = e
     if (!repeat && poolKeys.includes(key)) {
-      resolve({
+      addProgress({
         taskKey: `${key}`,
         taskCount: 5,
       })
@@ -91,23 +81,7 @@ class GameScene extends React.Component<Props> {
   }
 
   stopLoops() {
-    clearTimeout(this.mainLoop)
     clearTimeout(this.worldTimer)
-  }
-
-  startMainLoop() {
-    const { addToPool } = this.props
-    this.mainLoop = setTimeout(() => {
-      const poolsExist = this.poolKeys.length > 0
-      if (poolsExist) {
-        addToPool({
-          taskKey: getRandomPool(this.poolKeys),
-          taskCount: 5,
-        })
-      }
-
-      this.startMainLoop()
-    }, 200)
   }
 
   startWorldTimer() {
@@ -121,7 +95,6 @@ class GameScene extends React.Component<Props> {
   }
 
   startLoops() {
-    this.startMainLoop()
     this.startWorldTimer()
   }
 
@@ -148,10 +121,26 @@ export default connect(
     timePassed: timePassedSelector(state),
   }),
   {
-    addToPool: addTasks,
-    resolve: resolveTasks,
+    addProgress: addTaskProgress,
     startGame: initStartingState,
     toggleTimers: togglePause,
     tick: worldTick,
   },
 )(GameScene)
+
+/*
+  startMainLoop() {
+    const { addToPool } = this.props
+    this.mainLoop = setTimeout(() => {
+      const poolsExist = this.poolKeys.length > 0
+      if (poolsExist) {
+        addToPool({
+          taskKey: getRandomElement(this.poolKeys),
+          taskCount: 5,
+        })
+      }
+
+      this.startMainLoop()
+    }, 200)
+  }
+  */
