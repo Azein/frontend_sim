@@ -8,7 +8,7 @@ declare type TaskCategories = {
 declare type FormedTask = {
   taskKey: string
   label: string
-  taskCount: number
+  taskProgress: number
   taskId: string
   timer: number
 }

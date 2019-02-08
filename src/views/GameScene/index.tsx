@@ -4,7 +4,6 @@ import React from 'react'
 import styled from '@/styled-components'
 import { connect } from 'react-redux'
 import { Layout } from '@/ui/components/Layout'
-import { getRandomElement } from '@/utils'
 import { togglePause, worldTick } from '@/world/WorldState'
 import { pausedSelector, timePassedSelector } from '@/world/selectors'
 import TaskBox from './components/TaskBox'
@@ -24,14 +23,14 @@ const MainArea = styled(Layout)`
 `
 
 interface Props {
-  addProgress: (Payload: { taskKey: string; taskCount: number }) => void
+  addProgress: (Payload: { taskKey: string; progress: number }) => void
   startGame: Function
   toggleTimers: Function
   tick: (Payload: { time: number }) => void
   paused: boolean
   poolKeys: string[]
   timePassed: number
-  taskPools: Array<any>
+  taskPools: Array<FormedTask>
 }
 
 class GameScene extends React.Component<Props> {
@@ -72,7 +71,7 @@ class GameScene extends React.Component<Props> {
     if (!repeat && poolKeys.includes(key)) {
       addProgress({
         taskKey: `${key}`,
-        taskCount: 5,
+        progress: 5,
       })
     }
     if (keyCode === 32) {

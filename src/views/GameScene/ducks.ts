@@ -27,10 +27,10 @@ const tasksReducer = createReducer(
   // @ts-ignore
   {
     [initStartingState.getType()]: () => generateStartingState(),
-    [addTaskProgress.getType()]: (state, { taskKey, taskCount }) =>
+    [addTaskProgress.getType()]: (state, { taskKey, progress }) =>
       over(
-        lensPath(['currentTasks', taskKey, 'taskCount']),
-        count => (count <= 0 ? 0 : count - taskCount),
+        lensPath(['currentTasks', taskKey, 'taskProgress']),
+        current => current + progress,
         state,
       ),
     [eliminateTask.getType()]: (state, { taskId, taskKey }) =>

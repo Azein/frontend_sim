@@ -11,22 +11,31 @@ export const Container = styled.div`
 `
 
 export const TaskCard = styled.div`
-  position: relative;
   width: 260px;
   height: 200px;
   border: ${({ theme }) => `2px solid ${theme.color.cardBorder}`};
   display: flex;
-  flex-direction: column;
+  flex-direction: row nowrap;
   border-radius: 8px;
-  padding: 4px;
 `
 
-export const TaskPool = styled('div')<{
+export const ProgressIndicator = styled('div')<{
 taskCount: number
 }>`
-  width: 100%;
-  background-color: red;
+  width: 30px;
+  height: 100%;
+  flex-shrink: 0;
+  flex-grow: 0
+  background-color: blue;
   height: ${({ taskCount }) => `${taskCount}%`};
+`
+
+export const ContentContainer = styled.div`
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
 `
 
 export const TaskText = styled.p`
