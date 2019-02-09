@@ -10,8 +10,6 @@ import TaskBox from './components/TaskBox'
 import { addTaskProgress, initStartingState } from './ducks'
 import { taskPoolsSelector, existingKeysSelector } from './selectors'
 
-const mediaSrc = require('./k.mp3')
-
 const SceneLayout = styled(Layout)`
   padding: 20px;
 `
@@ -101,7 +99,6 @@ class GameScene extends React.Component<Props> {
     const { taskPools, timePassed } = this.props
     return (
       <SceneLayout>
-        <audio src={mediaSrc} autoPlay />
         <MainArea>
           {taskPools.map(taskPool => (
             <TaskBox key={taskPool.taskId} {...taskPool} />

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { togglePause } from '@/world/WorldState'
 import { eliminateTask, initStartingState } from '../../ducks'
@@ -23,43 +23,34 @@ type ActionProps = {
 
 type Props = ActionProps & FormedTask
 
-class TaskBox extends React.Component<Props> {
-  componentDidUpdate() {
-    const {
-      removeTask,
-      taskId,
-      taskKey,
-      timer,
-      taskProgress,
-      taskSize,
-    } = this.props
-    // TODO - pause bug
-    // TODO - remove task mechanics
-
+const TaskBox = ({
+  removeTask,
+  taskId,
+  taskKey,
+  timer,
+  taskProgress,
+  taskSize,
+  label,
+}: Props) => {
+  useEffect(() => {
     const timeIsOut = timer === 0
     const taskDone = taskProgress >= taskSize
     if (timeIsOut || taskDone) {
       removeTask({ taskId, taskKey })
     }
-  }
-
-  render() {
-    const {
-      taskProgress, label, timer, taskSize,
-    } = this.props
-    const progressPercentage = getProgressPercentage(taskProgress, taskSize)
-    return (
-      <Container>
-        <TaskCard>
-          <ProgressIndicator taskCount={progressPercentage} />
-          <ContentContainer>
-            <TaskText>{label}</TaskText>
-            <TaskTimer>{timer}</TaskTimer>
-          </ContentContainer>
-        </TaskCard>
-      </Container>
-    )
-  }
+  })
+  const progressPercentage = getProgressPercentage(taskProgress, taskSize)
+  return (
+    <Container>
+      <TaskCard>
+        <ProgressIndicator taskCount={progressPercentage} />
+        <ContentContainer>
+          <TaskText>{label}</TaskText>
+          <TaskTimer>{timer}</TaskTimer>
+        </ContentContainer>
+      </TaskCard>
+    </Container>
+  )
 }
 
 export default connect(

@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from '@/styled-components'
-import EmojiFrequentIcon from '@atlaskit/icon/glyph/emoji/frequent'
+import { default as TimeIcon } from '@atlaskit/icon/glyph/emoji/frequent'
 
 const Container = styled.div`
   font-size: 16px;
@@ -16,7 +16,7 @@ interface Props {
 
 const TimeIndicator = ({ children, ...props }: Props) => (
   <Container {...props}>
-    <EmojiFrequentIcon label="" />
+    <TimeIcon label="" />
     <span>{children}</span>
   </Container>
 )
