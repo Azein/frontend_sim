@@ -23,7 +23,7 @@ export const ProgressIndicator = styled('div')<{
 taskCount: number
 }>`
   width: 30px;
-  height: 100%;
+  max-height: 100%;
   flex-shrink: 0;
   flex-grow: 0
   background-color: blue;

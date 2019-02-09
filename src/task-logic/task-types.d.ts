@@ -9,6 +9,7 @@ declare type FormedTask = {
   taskKey: string
   label: string
   taskProgress: number
+  taskSize: number
   taskId: string
   timer: number
 }

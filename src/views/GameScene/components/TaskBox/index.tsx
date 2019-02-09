@@ -11,16 +11,17 @@ import {
   TaskTimer,
 } from './styled'
 
-interface Props {
+type GetProgressPercentage = (progress: number, size: number) => number
+const getProgressPercentage: GetProgressPercentage = (progress, size) =>
+  Math.floor(progress / (size / 100))
+
+type ActionProps = {
   removeTask: (payload: { taskId: string; taskKey: string }) => void
-  taskId: string
-  taskKey: string
-  timer: number
   restartGame: () => void
-  taskProgress: number
   pause: () => void
-  label: string
 }
+
+type Props = ActionProps & FormedTask
 
 class TaskBox extends React.Component<Props> {
   componentDidUpdate() {
@@ -29,23 +30,28 @@ class TaskBox extends React.Component<Props> {
       taskId,
       taskKey,
       timer,
-      restartGame,
       taskProgress,
-      pause,
+      taskSize,
     } = this.props
     // TODO - pause bug
     // TODO - remove task mechanics
-    if (timer === 0) {
+
+    const timeIsOut = timer === 0
+    const taskDone = taskProgress >= taskSize
+    if (timeIsOut || taskDone) {
       removeTask({ taskId, taskKey })
     }
   }
 
   render() {
-    const { taskProgress, label, timer } = this.props
+    const {
+      taskProgress, label, timer, taskSize,
+    } = this.props
+    const progressPercentage = getProgressPercentage(taskProgress, taskSize)
     return (
       <Container>
         <TaskCard>
-          <ProgressIndicator taskCount={taskProgress} />
+          <ProgressIndicator taskCount={progressPercentage} />
           <ContentContainer>
             <TaskText>{label}</TaskText>
             <TaskTimer>{timer}</TaskTimer>

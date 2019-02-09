@@ -2,17 +2,15 @@ import { getPrefixedTasksMap } from './utils'
 import { techTasks } from './tech-tasks'
 import { urgentTasks } from './urgent-tasks'
 import { businessTasks } from './business-tasks'
+import { TASK_TYPES } from '@/task-logic/constants'
 
-const PREFIXES = {
-  tech: 'tech',
-  urgent: 'urgent',
-  business: 'business',
-}
-
-export const techTasksMap = getPrefixedTasksMap(PREFIXES.tech, techTasks)
-export const urgentTasksMap = getPrefixedTasksMap(PREFIXES.urgent, urgentTasks)
+export const techTasksMap = getPrefixedTasksMap(TASK_TYPES.tech, techTasks)
+export const urgentTasksMap = getPrefixedTasksMap(
+  TASK_TYPES.urgent,
+  urgentTasks,
+)
 export const businessTasksMap = getPrefixedTasksMap(
-  PREFIXES.business,
+  TASK_TYPES.business,
   businessTasks,
 )
 
