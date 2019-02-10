@@ -9,6 +9,9 @@ import {
   ProgressIndicator,
   TaskText,
   TaskTimer,
+  HeaderBlock,
+  TimerContainer,
+  PercentageIndicator,
 } from './styled'
 
 type GetProgressPercentage = (progress: number, size: number) => number
@@ -43,11 +46,19 @@ const TaskBox = ({
   return (
     <Container>
       <TaskCard>
-        <ProgressIndicator taskCount={progressPercentage} />
         <ContentContainer>
-          <TaskText>{label}</TaskText>
-          <TaskTimer>{timer}</TaskTimer>
+          <HeaderBlock>
+            <TaskText>{label}</TaskText>
+            <TimerContainer>
+              <TaskTimer>{timer}</TaskTimer>
+            </TimerContainer>
+          </HeaderBlock>
         </ContentContainer>
+        <ProgressIndicator progressPercentage={progressPercentage} />
+        <PercentageIndicator>
+          {progressPercentage}
+%
+        </PercentageIndicator>
       </TaskCard>
     </Container>
   )

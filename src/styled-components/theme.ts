@@ -17,12 +17,17 @@ const colorPrimitives = {
     800: '#37474F',
     900: '#263238',
   },
+  blue: {
+    bright: '#2979FF',
+    brightest: '#2962FF',
+  },
   white: '#fff',
 }
 
 const color = {
   textWhite: colorPrimitives.white,
   cardBorder: colorPrimitives.blueGray.lighter,
+  taskProgress: colorPrimitives.blue.bright,
 }
 
 export { color }
