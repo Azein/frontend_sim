@@ -7,8 +7,8 @@ import { Layout } from '@/ui/components/Layout'
 import { togglePause, worldTick } from '@/world/WorldState'
 import { pausedSelector, timePassedSelector } from '@/world/selectors'
 import TaskBox from './components/TaskBox'
-import { addTaskProgress, initStartingState } from './ducks'
-import { taskPoolsSelector, existingKeysSelector } from './selectors'
+import { addTaskProgress, initStartingState } from '@/tasks/ducks'
+import { taskPoolsSelector, existingKeysSelector } from '@/tasks/selectors'
 
 const SceneLayout = styled(Layout)`
   padding: 20px;

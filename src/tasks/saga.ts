@@ -8,8 +8,6 @@ function* eliminationWatcher() {
   yield put(generateTask())
 }
 
-function* gameSaga() {
+export function* tasksSaga() {
   yield takeEvery(eliminateTask.getType(), eliminationWatcher)
 }
-
-export default gameSaga

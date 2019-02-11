@@ -10,10 +10,9 @@ import {
   append,
 } from 'ramda'
 
-import generateStartingState, {
-  generateTaskPool,
-} from '@/task-logic/task-generation'
-import { allTasksMap as taskCategories } from '@/task-logic/proto-tasks'
+import { generateStartingState } from '@/tasks/logic/starting-state'
+import { updateTaskPool } from '@/tasks/logic/update-task-pool'
+import { allTasksMap as taskCategories } from '@/tasks/proto-tasks'
 import { worldTick } from '@/world/WorldState'
 
 // export const addTasks = createAction('tasksLoop/addTasks')
@@ -43,7 +42,7 @@ const tasksReducer = createReducer(
         over(lensPath(['usedKeys']), without([taskKey])),
         over(lensPath(['unusedKeys']), append(taskKey)),
       )(state),
-    [generateTask.getType()]: state => generateTaskPool(state),
+    [generateTask.getType()]: state => updateTaskPool(state),
     [worldTick.getType()]: (state, { time }) =>
       over(
         lensPath(['currentTasks']),

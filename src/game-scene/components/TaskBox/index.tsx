@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { togglePause } from '@/world/WorldState'
-import { eliminateTask, initStartingState } from '../../ducks'
+import { eliminateTask, initStartingState } from '@/tasks/ducks'
 import {
   Container,
   TaskCard,

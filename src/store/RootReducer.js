@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
-import tasksReducer from '@/views/GameScene/ducks'
-import worldReducer from '../world/WorldState'
-import playerReducer from '../world/PlayerState'
+import tasksReducer from '@/tasks/ducks'
+import worldReducer from '@/world/WorldState'
+import playerReducer from '@/world/PlayerState'
 
 const rootReducer = combineReducers({
   tasks: tasksReducer,

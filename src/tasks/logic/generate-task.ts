@@ -1,11 +1,11 @@
 import { getMinMax } from '@/utils'
-import { allTasksMap as taskCategories } from './proto-tasks'
+import { allTasksMap as taskCategories } from '../proto-tasks'
 
 import {
   DEFAULT_TIME_RANGE,
   DEFAULT_TASK_PROGRESS,
   DEFAULT_TASK_SIZE,
-} from './constants'
+} from '@/tasks/constants'
 
 type GenerateTask = (
   {

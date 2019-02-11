@@ -1,6 +1,6 @@
 import { all } from 'redux-saga/effects'
-import gameSaga from '@/views/GameScene/saga'
+import { tasksSaga } from '@/tasks/saga'
 
 export default function* rootSaga() {
-  yield all([gameSaga()])
+  yield all([tasksSaga()])
 }
