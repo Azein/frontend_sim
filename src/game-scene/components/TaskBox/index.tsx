@@ -1,7 +1,10 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import { togglePause } from '@/world/WorldState'
 import { eliminateTask, initStartingState } from '@/tasks/ducks'
+import { taskCommentRequest } from '@/comments/ducks'
+import { COMMENTING_STAGES } from '@/comments/constants'
+import { getPercentage } from '@/utils'
 import {
   Container,
   TaskCard,
@@ -14,14 +17,17 @@ import {
   PercentageIndicator,
 } from './styled'
 
-type GetProgressPercentage = (progress: number, size: number) => number
-const getProgressPercentage: GetProgressPercentage = (progress, size) =>
-  Math.floor(progress / (size / 100))
-
 type ActionProps = {
   removeTask: (payload: { taskId: string; taskKey: string }) => void
   restartGame: () => void
   pause: () => void
+  requestComment: (
+    payload: {
+    taskId: string
+    timePassedPercent: number
+    progressPercent: number
+    },
+  ) => void
 }
 
 type Props = ActionProps & FormedTask
@@ -34,7 +40,10 @@ const TaskBox = ({
   taskProgress,
   taskSize,
   label,
+  requestComment,
 }: Props) => {
+  const initialTime = useRef(timer)
+  const progressPercent = getPercentage(taskProgress, taskSize)
   useEffect(() => {
     const timeIsOut = timer === 0
     const taskDone = taskProgress >= taskSize
@@ -42,7 +51,18 @@ const TaskBox = ({
       removeTask({ taskId, taskKey })
     }
   })
-  const progressPercentage = getProgressPercentage(taskProgress, taskSize)
+  useEffect(() => {
+    const timePool = initialTime.current
+    const timePassedPercent = getPercentage(timer, timePool)
+    if (
+      timePassedPercent === COMMENTING_STAGES.start
+      || timePassedPercent === COMMENTING_STAGES.progress
+      || timePassedPercent === COMMENTING_STAGES.nearDeadline
+    ) {
+      requestComment({ taskId, timePassedPercent, progressPercent })
+    }
+  })
+
   return (
     <Container>
       <TaskCard>
@@ -54,9 +74,9 @@ const TaskBox = ({
             </TimerContainer>
           </HeaderBlock>
         </ContentContainer>
-        <ProgressIndicator progressPercentage={progressPercentage} />
+        <ProgressIndicator progressPercentage={progressPercent} />
         <PercentageIndicator>
-          {progressPercentage}
+          {progressPercent}
 %
         </PercentageIndicator>
       </TaskCard>
@@ -70,5 +90,6 @@ export default connect(
     removeTask: eliminateTask,
     restartGame: initStartingState,
     pause: togglePause,
+    requestComment: taskCommentRequest,
   },
 )(TaskBox)

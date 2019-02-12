@@ -1,6 +1,10 @@
 import { pipe, slice, head } from 'ramda'
 import shuffleArray from 'shuffle-array'
 
+type GetPercentage = (currentValue: number, pool: number) => number
+export const getPercentage: GetPercentage = (currentValue, pool) =>
+  Math.floor(currentValue / (pool / 100))
+
 type GetMinMax = (min: number, max: number) => number
 
 export const getMinMax: GetMinMax = (min, max) =>
