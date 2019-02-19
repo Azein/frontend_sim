@@ -9,3 +9,5 @@ export const COMMENTING_STAGES: CommentingStages = {
   progress: 30,
   nearDeadline: 85,
 }
+
+const MANAGERS_QTY = 4
