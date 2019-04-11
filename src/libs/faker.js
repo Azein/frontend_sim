@@ -1,3 +1,3 @@
-import faker from 'faker/locales/ru'
+import faker from 'faker/locale/ru'
 
 export { faker }

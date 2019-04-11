@@ -1,13 +1,11 @@
 interface CommentingStages {
-  start: number
-  progress: number
-  nearDeadline: number
+  [progressPercent: string]: string
 }
 
 export const COMMENTING_STAGES: CommentingStages = {
-  start: 5,
-  progress: 30,
-  nearDeadline: 85,
+  5: 'start',
+  30: 'progress',
+  85: 'nearDeadline',
 }
 
-const MANAGERS_QTY = 4
+export const MANAGERS_QTY = 4

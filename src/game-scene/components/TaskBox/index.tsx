@@ -24,7 +24,7 @@ type ActionProps = {
   requestComment: (
     payload: {
     taskId: string
-    timePassedPercent: number
+    commentingStage: string
     progressPercent: number
     },
   ) => void
@@ -54,12 +54,11 @@ const TaskBox = ({
   useEffect(() => {
     const timePool = initialTime.current
     const timePassedPercent = getPercentage(timer, timePool)
+    const commentingStage = COMMENTING_STAGES[timePassedPercent]
     if (
-      timePassedPercent === COMMENTING_STAGES.start
-      || timePassedPercent === COMMENTING_STAGES.progress
-      || timePassedPercent === COMMENTING_STAGES.nearDeadline
+      commentingStage
     ) {
-      requestComment({ taskId, timePassedPercent, progressPercent })
+      requestComment({ taskId, commentingStage, progressPercent })
     }
   })
 
