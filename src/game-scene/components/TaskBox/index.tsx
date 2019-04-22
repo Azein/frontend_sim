@@ -2,9 +2,10 @@ import React, { useEffect, useRef } from 'react'
 import { connect } from 'react-redux'
 import { togglePause } from '@/world/WorldState'
 import { eliminateTask, initStartingState } from '@/tasks/ducks'
-import { taskCommentRequest } from '@/comments/ducks'
+import { taskCommentRequest, RequestCommentAction } from '@/comments/ducks'
 import { COMMENTING_STAGES } from '@/comments/constants'
 import { getPercentage } from '@/utils'
+import Comment from '../Comment'
 import {
   Container,
   TaskCard,
@@ -21,13 +22,7 @@ type ActionProps = {
   removeTask: (payload: { taskId: string; taskKey: string }) => void
   restartGame: () => void
   pause: () => void
-  requestComment: (
-    payload: {
-    taskId: string
-    commentingStage: string
-    progressPercent: number
-    },
-  ) => void
+  requestComment: (payload: RequestCommentAction) => void
 }
 
 type Props = ActionProps & FormedTask
@@ -54,11 +49,9 @@ const TaskBox = ({
   useEffect(() => {
     const timePool = initialTime.current
     const timePassedPercent = getPercentage(timer, timePool)
-    const commentingStage = COMMENTING_STAGES[timePassedPercent]
-    if (
-      commentingStage
-    ) {
-      requestComment({ taskId, commentingStage, progressPercent })
+    const stage = COMMENTING_STAGES[timePassedPercent]
+    if (stage) {
+      requestComment({ taskId, stage, progressPercent })
     }
   })
 
@@ -72,6 +65,7 @@ const TaskBox = ({
               <TaskTimer>{timer}</TaskTimer>
             </TimerContainer>
           </HeaderBlock>
+          <Comment taskId={taskId} />
         </ContentContainer>
         <ProgressIndicator progressPercentage={progressPercent} />
         <PercentageIndicator>

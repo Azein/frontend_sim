@@ -5,13 +5,19 @@ import { generateManagers } from './logic/generate-managers'
 
 export const stateKey = 'comments'
 
+export type RequestCommentAction = {
+  taskId: string
+  stage: string
+  progressPercent: number
+}
 export const taskCommentRequest = createAction(`${stateKey}/taskCommentRequest`)
+
 export const addComment = createAction(`${stateKey}/addComment`)
 
 interface State {
   managers: string[]
   comments: {
-    [key: string]: any
+    [key: string]: TaskComment
   }
 }
 const initialState: State = {
