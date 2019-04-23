@@ -2,6 +2,7 @@ import { createAction, createReducer } from 'redux-act'
 import { assocPath, dissocPath } from 'ramda'
 import { eliminateTask } from '@/tasks/ducks'
 import { generateManagers } from './logic/generate-managers'
+import { MANAGERS_QTY } from './constants'
 
 export const stateKey = 'comments'
 
@@ -20,8 +21,9 @@ interface State {
     [key: string]: TaskComment
   }
 }
+
 const initialState: State = {
-  managers: generateManagers(),
+  managers: generateManagers(MANAGERS_QTY),
   comments: {},
 }
 

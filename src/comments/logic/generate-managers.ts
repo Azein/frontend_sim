@@ -3,4 +3,6 @@ import { MANAGERS_QTY } from '../constants'
 
 type GenerateManagers = (qty: number) => string[]
 export const generateManagers = (qty = MANAGERS_QTY) =>
-  Array(qty).map(_ => faker.name.findName())
+  Array(qty)
+    .fill(null)
+    .map(_ => faker.name.findName())

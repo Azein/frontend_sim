@@ -23,6 +23,7 @@ payload: RequestCommentAction
     progressPercent,
     author: commentForTask ? commentForTask.author : getRandomManager(state),
   })
+
   yield put(addCommentAction({ taskId, comment }))
 }
 

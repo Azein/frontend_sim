@@ -1,7 +1,3 @@
-interface CommentingStages {
-  [progressPercent: string]: string
-}
-
 interface ProgressTresholds {
   [stageName: string]: number
 }
@@ -12,10 +8,10 @@ export const STAGE_NAMES = {
   nearDeadLine: 'nearDeadLine',
 }
 
-export const COMMENTING_STAGES: CommentingStages = {
-  5: STAGE_NAMES.start,
-  30: STAGE_NAMES.progress,
-  85: STAGE_NAMES.nearDeadLine,
+export const COMMENTING_STAGES = {
+  [STAGE_NAMES.start]: 5,
+  [STAGE_NAMES.progress]: 30,
+  [STAGE_NAMES.nearDeadLine]: 85,
 }
 
 export const PROGRESS_TRESHOLDS: ProgressTresholds = {

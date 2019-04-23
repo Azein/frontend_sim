@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
 import { togglePause } from '@/world/WorldState'
 import { eliminateTask, initStartingState } from '@/tasks/ducks'
 import { taskCommentRequest, RequestCommentAction } from '@/comments/ducks'
-import { COMMENTING_STAGES } from '@/comments/constants'
+import { getCommentStage } from '@/comments/logic/get-stage'
+
 import { getPercentage } from '@/utils'
 import Comment from '../Comment'
 import {
@@ -39,6 +40,7 @@ const TaskBox = ({
 }: Props) => {
   const initialTime = useRef(timer)
   const progressPercent = getPercentage(taskProgress, taskSize)
+  const [stage, updateStage] = useState('initial')
   useEffect(() => {
     const timeIsOut = timer === 0
     const taskDone = taskProgress >= taskSize
@@ -48,10 +50,11 @@ const TaskBox = ({
   })
   useEffect(() => {
     const timePool = initialTime.current
-    const timePassedPercent = getPercentage(timer, timePool)
-    const stage = COMMENTING_STAGES[timePassedPercent]
-    if (stage) {
-      requestComment({ taskId, stage, progressPercent })
+    const timePassedPercent = getPercentage(timePool - timer, timePool)
+    const newStage = getCommentStage(timePassedPercent, stage)
+    if (newStage) {
+      requestComment({ taskId, stage: newStage, progressPercent })
+      updateStage(newStage)
     }
   })
 
