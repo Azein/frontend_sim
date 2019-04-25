@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'react'
 import styled from '@/styled-components'
 import { connect } from 'react-redux'
@@ -66,7 +64,9 @@ class GameScene extends React.Component<Props> {
   handleKeyDown = (e: KeyboardEvent) => {
     const { addProgress, toggleTimers, paused } = this.props
     const { poolKeys } = this
-    const { key, keyCode, repeat } = e
+    const { keyCode, repeat } = e
+    const key = String.fromCharCode(keyCode).toLowerCase()
+
     if (!paused && !repeat && poolKeys.includes(key)) {
       addProgress({
         taskKey: `${key}`,
