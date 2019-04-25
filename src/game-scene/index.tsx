@@ -64,10 +64,10 @@ class GameScene extends React.Component<Props> {
   }
 
   handleKeyDown = (e: KeyboardEvent) => {
-    const { addProgress, toggleTimers } = this.props
+    const { addProgress, toggleTimers, paused } = this.props
     const { poolKeys } = this
     const { key, keyCode, repeat } = e
-    if (!repeat && poolKeys.includes(key)) {
+    if (!paused && !repeat && poolKeys.includes(key)) {
       addProgress({
         taskKey: `${key}`,
         progress: 5,
@@ -106,7 +106,7 @@ class GameScene extends React.Component<Props> {
               (taskPools[controlKey] ? (
                 <TaskBox key={controlKey} {...taskPools[controlKey]} />
               ) : (
-                <EmptyTaskBox key={`empty_${controlKey}`}/>
+                <EmptyTaskBox key={`empty_${controlKey}`} />
               )),
           )}
         </MainArea>
