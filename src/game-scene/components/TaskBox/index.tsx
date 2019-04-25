@@ -80,6 +80,12 @@ const TaskBox = ({
   )
 }
 
+export const EmptyTaskBox = () => (
+  <Container>
+    <TaskCard />
+  </Container>
+)
+
 export default connect(
   null,
   {

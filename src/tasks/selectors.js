@@ -1,8 +1,9 @@
 import { createSelector } from 'reselect'
 import { values } from 'ramda'
 
-const getTasks = state => state.tasks.currentTasks
 const getUsedKeys = state => state.tasks.usedKeys
+
+export const getTasks = state => state.tasks.currentTasks
 
 export const taskPoolsSelector = createSelector([getTasks], tasks => [
   ...values(tasks),
