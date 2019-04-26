@@ -1,8 +1,9 @@
-type GetNextLvlExp = (prevAmount: number, prevLevel: number) => number
+import { PlayerState } from '@/domains/player/ducks'
 
-export const getNextLvlExp: GetNextLvlExp = (prevAmount, prevLevel) => {
-  const currentLevel = prevLevel + 1
-  const basedOnLevel = currentLevel * (3000 + currentLevel * 100)
-  const basedOnAmount = Math.ceil(prevAmount / 10)
+type GetNextLvlExp = ({ level, toNextLvl }: PlayerState) => number
+
+export const getNextLvlExp: GetNextLvlExp = ({ level, toNextLvl }) => {
+  const basedOnLevel = level * (3000 + level * 100)
+  const basedOnAmount = Math.ceil(toNextLvl / 10)
   return basedOnLevel + basedOnAmount
 }

@@ -1,6 +1,14 @@
 import { createReducer, createAction } from 'redux-act'
 import {
-  pipe, over, lensPath, when, propSatisfies, add,
+  pipe,
+  over,
+  lensPath,
+  when,
+  propSatisfies,
+  add,
+  assoc,
+  prop,
+  subtract,
 } from 'ramda'
 import devGrades, { DevGrade } from './devGrades'
 import { getNextLvlExp } from './logic/get-next-lvl'
@@ -10,10 +18,10 @@ export const stateKey = 'player'
 export const addExperience = createAction(`${stateKey}/addExperience`)
 export const addLevel = createAction(`${stateKey}/addLevel`)
 
-interface PlayerState {
+export interface PlayerState {
   level: number
   grade: DevGrade
-  totalExp: number
+  currentExp: number
   toNextLvl: number
   skills: {}
 }
@@ -21,25 +29,48 @@ interface PlayerState {
 const initialState: PlayerState = {
   level: 1,
   grade: devGrades.junior,
-  totalExp: 0,
+  currentExp: 0,
   toNextLvl: 1000,
   skills: {},
 }
+
+// TODO - why even need any type?
+type TransferExpToNext = (arg: any | PlayerState) => PlayerState
+
+const transferExpToNext: TransferExpToNext = ({
+  toNextLvl,
+  currentExp,
+  ...rest
+}) => ({
+  ...rest,
+  toNextLvl,
+  currentExp: currentExp - toNextLvl,
+})
+
+const lvlUp = over(lensPath(['level']), add(1))
+
+const setNextLevel = (state: PlayerState) => ({
+  ...state,
+  toNextLvl: getNextLvlExp(state),
+})
 
 const playerReducer = createReducer(
   // @ts-ignore
   {
     [addExperience.getType()]: (state, { expAmount }) =>
       pipe(
-        over(lensPath(['totalExp']), add(expAmount)),
+        over(lensPath(['currentExp']), add(expAmount)),
         when(
-          propSatisfies(exp => exp > state.toNextLvl, 'totalExp'),
+          propSatisfies(exp => exp >= state.toNextLvl, 'currentExp'),
           pipe(
-            over(lensPath(['level']), add(1)),
-            over(
-              lensPath(['toNextLvl']),
-              add(getNextLvlExp(state.toNextLvl, state.level)),
-            ),
+            // @ts-ignore
+            (x) => {
+              console.log('xd')
+              return x
+            },
+            lvlUp,
+            transferExpToNext,
+            setNextLevel,
           ),
         ),
       )(state),

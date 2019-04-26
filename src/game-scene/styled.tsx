@@ -10,6 +10,7 @@ export const HUDArea = styled(Layout)`
   height: 200px;
   padding-top: 10px;
   padding-bottom: 10px;
+  border-top: ${({ theme }) => `2px solid ${theme.color.cardBorder}`};
 `
 
 export const SceneLayout = styled(Layout)`

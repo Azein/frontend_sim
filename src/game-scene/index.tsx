@@ -5,6 +5,7 @@ import { pausedSelector, timePassedSelector } from '@/domains/world/selectors'
 import { addTaskProgress, initStartingState } from '@/domains/tasks/ducks'
 import { existingKeysSelector } from '@/domains/tasks/selectors'
 import TaskRows from '@/domains/tasks/components/TaskRows'
+import ExpBar from '@/domains/player/components/ExpBar'
 import { Screen, SceneLayout, HUDArea } from './styled'
 
 interface Props {
@@ -89,7 +90,9 @@ class GameScene extends React.Component<Props> {
         <SceneLayout>
           <TaskRows />
         </SceneLayout>
-        <HUDArea />
+        <HUDArea>
+          <ExpBar />
+        </HUDArea>
       </Screen>
     )
   }

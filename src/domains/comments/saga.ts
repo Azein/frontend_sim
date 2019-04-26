@@ -3,6 +3,7 @@ import { taskCommentRequest, addComment, RequestCommentAction } from './ducks'
 import { getComment, getRandomManager } from './selectors'
 import { generateComment } from './logic/generate-comment'
 
+// TODO solve typing for sagas
 type AddCommentAction = (
   { taskId, comment }: { taskId: string; comment: TaskComment },
 ) => any

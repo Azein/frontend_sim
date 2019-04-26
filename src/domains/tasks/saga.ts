@@ -3,9 +3,17 @@ import { takeEvery, put } from 'redux-saga/effects'
 import { addExperience } from '@/domains/player/ducks'
 import { eliminateTask, generateTask } from './ducks'
 
-function* eliminationWatcher() {
-  // @ts-ignore
-  yield put(addExperience({ expAmount: 500 }))
+interface EliminateTaskAction {
+  type: string
+  payload: {
+    taskDone: any
+  }
+}
+function* eliminationWatcher({ payload: { taskDone } }: EliminateTaskAction) {
+  if (taskDone) {
+    // @ts-ignore
+    yield put(addExperience({ expAmount: 500 }))
+  }
   yield delay(2000)
   yield put(generateTask())
 }

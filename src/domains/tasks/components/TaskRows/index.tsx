@@ -11,8 +11,8 @@ interface Props {
 
 const TaskRows = ({ taskPools }: Props) => (
   <RowsContainer>
-    {keyRows.map(keyRow => (
-      <Row>
+    {keyRows.map((keyRow, i) => (
+      <Row key={i}>
         {keyRow.map(
           controlKey =>
             (taskPools[controlKey] ? (

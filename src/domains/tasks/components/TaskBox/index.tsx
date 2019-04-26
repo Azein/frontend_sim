@@ -10,11 +10,11 @@ import { getCommentStage } from '@/domains/comments/logic/get-stage'
 
 import { getPercentage } from '@/utils'
 import Comment from '@/domains/comments/components/Comment'
+import { ProgressBar } from '@/ui/components/ProgressBar'
 import {
   Container,
   TaskCard,
   ContentContainer,
-  ProgressIndicator,
   TaskText,
   TaskTimer,
   HeaderBlock,
@@ -23,7 +23,9 @@ import {
 } from './styled'
 
 type ActionProps = {
-  removeTask: (payload: { taskId: string; taskKey: string }) => void
+  removeTask: (
+    payload: { taskId: string; taskKey: string; timeIsOut: any; taskDone: any },
+  ) => void
   restartGame: () => void
   pause: () => void
   requestComment: (payload: RequestCommentAction) => void
@@ -48,7 +50,12 @@ const TaskBox = ({
     const timeIsOut = timer === 0
     const taskDone = taskProgress >= taskSize
     if (timeIsOut || taskDone) {
-      removeTask({ taskId, taskKey })
+      removeTask({
+        taskId,
+        taskKey,
+        timeIsOut,
+        taskDone,
+      })
     }
   })
   useEffect(() => {
@@ -73,7 +80,7 @@ const TaskBox = ({
           </HeaderBlock>
           <Comment taskId={taskId} />
         </ContentContainer>
-        <ProgressIndicator progressPercentage={progressPercent} />
+        <ProgressBar progressPercentage={progressPercent} />
         <PercentageIndicator>
           {progressPercent}
 %
