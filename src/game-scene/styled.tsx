@@ -14,10 +14,8 @@ export const HUDArea = styled(Layout)`
 
 export const SceneLayout = styled(Layout)`
   padding: 20px;
-`
-export const MainArea = styled(Layout)`
   flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  height: auto;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 `

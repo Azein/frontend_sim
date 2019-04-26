@@ -2,13 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { togglePause, worldTick } from '@/domains/world/WorldState'
 import { pausedSelector, timePassedSelector } from '@/domains/world/selectors'
-import { allKeys } from '@/domains/controls'
-import TaskBox, { EmptyTaskBox } from './components/TaskBox'
 import { addTaskProgress, initStartingState } from '@/domains/tasks/ducks'
-import { getTasks, existingKeysSelector } from '@/domains/tasks/selectors'
-import {
-  Screen, SceneLayout, MainArea, HUDArea,
-} from './styled'
+import { existingKeysSelector } from '@/domains/tasks/selectors'
+import TaskRows from '@/domains/tasks/components/TaskRows'
+import { Screen, SceneLayout, HUDArea } from './styled'
 
 interface Props {
   addProgress: (Payload: { taskKey: string; progress: number }) => void
@@ -18,7 +15,6 @@ interface Props {
   paused: boolean
   poolKeys: string[]
   timePassed: number
-  taskPools: FormedTaskPool
 }
 
 class GameScene extends React.Component<Props> {
@@ -88,20 +84,10 @@ class GameScene extends React.Component<Props> {
   }
 
   render() {
-    const { taskPools, timePassed } = this.props
     return (
       <Screen>
         <SceneLayout>
-          <MainArea>
-            {allKeys.map(
-              controlKey =>
-                (taskPools[controlKey] ? (
-                  <TaskBox key={controlKey} {...taskPools[controlKey]} />
-                ) : (
-                  <EmptyTaskBox key={`empty_${controlKey}`} />
-                )),
-            )}
-          </MainArea>
+          <TaskRows />
         </SceneLayout>
         <HUDArea />
       </Screen>
@@ -111,7 +97,6 @@ class GameScene extends React.Component<Props> {
 
 export default connect(
   state => ({
-    taskPools: getTasks(state),
     poolKeys: existingKeysSelector(state),
     paused: pausedSelector(state),
     timePassed: timePassedSelector(state),

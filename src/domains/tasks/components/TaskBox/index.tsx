@@ -9,7 +9,7 @@ import {
 import { getCommentStage } from '@/domains/comments/logic/get-stage'
 
 import { getPercentage } from '@/utils'
-import Comment from '../Comment'
+import Comment from '@/domains/comments/components/Comment'
 import {
   Container,
   TaskCard,

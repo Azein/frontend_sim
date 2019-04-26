@@ -1,5 +1,5 @@
 import styled from '@/styled-components'
-import TimeIndicator from '../TimeIndicator'
+import TimeIndicator from '@/ui/components/TimeIndicator'
 
 export const Container = styled.div`
   width: 340px;
