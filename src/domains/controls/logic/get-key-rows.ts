@@ -1,8 +1,8 @@
 import {
   splitEvery, pipe, slice, map,
 } from 'ramda'
-import { DEFAULT_TASKS_QTY } from '@/tasks/constants'
-import { CONTROL_ROWS_QTY } from '@/controls/constants'
+import { DEFAULT_TASKS_QTY } from '@/domains/tasks/constants'
+import { CONTROL_ROWS_QTY } from '@/domains/controls/constants'
 
 const rowSize = DEFAULT_TASKS_QTY / CONTROL_ROWS_QTY
 

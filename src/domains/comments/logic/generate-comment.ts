@@ -1,6 +1,6 @@
 import { path } from 'ramda'
-import { protoComments } from '@/comments/proto-comments'
-import { PROGRESS_TRESHOLDS } from '@/comments/constants'
+import { protoComments } from '@/domains/comments/proto-comments'
+import { PROGRESS_TRESHOLDS } from '@/domains/comments/constants'
 import { getRandomElement } from '@/utils'
 
 type GetCommentText = (stage: string, progressPercent: number) => string

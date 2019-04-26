@@ -1,5 +1,5 @@
-import { allTasksMap as taskCategories } from '../proto-tasks'
-import { allKeys } from '@/controls'
+import { allTasksMap as taskCategories } from '@/domains/tasks/proto-tasks'
+import { allKeys } from '@/domains/controls'
 import { generateTaskPools } from './generate-task-pools'
 import { distributeKeys } from './distribute-keys'
 

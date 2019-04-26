@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux'
 import tasksReducer from '@/domains/tasks/ducks'
 import worldReducer from '@/domains/world/WorldState'
-import playerReducer from '@/domains/world/PlayerState'
+import playerReducer from '@/domains/player/ducks'
 import {
   commentsReducer,
   stateKey as commentsKey,

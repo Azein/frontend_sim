@@ -5,7 +5,5 @@ const keys = ['q', 'w', 'e', 'r', 't', 'y', 'a', 's', 'd', 'f', 'g', 'h']
 
 export const keyRows: Array<string[]> = getKeyRows(keys)
 
-console.info(keyRows)
-
 // @ts-ignore
 export const allKeys: string[] = flatten(keyRows)

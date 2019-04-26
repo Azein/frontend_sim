@@ -10,10 +10,10 @@ import {
   append,
 } from 'ramda'
 
-import { generateStartingState } from '@/tasks/logic/starting-state'
-import { updateTaskPool } from '@/tasks/logic/update-task-pool'
-import { allTasksMap as taskCategories } from '@/tasks/proto-tasks'
-import { worldTick } from '@/world/WorldState'
+import { generateStartingState } from '@/domains/tasks/logic/starting-state'
+import { updateTaskPool } from '@/domains/tasks/logic/update-task-pool'
+import { allTasksMap as taskCategories } from '@/domains/tasks/proto-tasks'
+import { worldTick } from '@/domains/world/WorldState'
 
 // export const addTasks = createAction('tasksLoop/addTasks')
 export const addTaskProgress = createAction('tasksLoop/addTaskProgress')

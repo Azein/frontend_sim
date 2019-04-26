@@ -1,9 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { connect } from 'react-redux'
-import { togglePause } from '@/world/WorldState'
-import { eliminateTask, initStartingState } from '@/tasks/ducks'
-import { taskCommentRequest, RequestCommentAction } from '@/comments/ducks'
-import { getCommentStage } from '@/comments/logic/get-stage'
+import { togglePause } from '@/domains/world/WorldState'
+import { eliminateTask, initStartingState } from '@/domains/tasks/ducks'
+import {
+  taskCommentRequest,
+  RequestCommentAction,
+} from '@/domains/comments/ducks'
+import { getCommentStage } from '@/domains/comments/logic/get-stage'
 
 import { getPercentage } from '@/utils'
 import Comment from '../Comment'

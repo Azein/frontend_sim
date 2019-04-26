@@ -1,21 +1,23 @@
+export interface DevGrade {
+  name: string
+  reqLevel: number
+}
+
 interface DevGrades {
-  [gradeName: string]: {
-    name: string
-    reqLevel: number
-  }
+  [gradeName: string]: DevGrade
 }
 
 const devGrades: DevGrades = {
   junior: {
-    name: 'Джуниор',
+    name: 'Junior',
     reqLevel: 0,
   },
   middle: {
-    name: 'Мидл',
+    name: 'Middle',
     reqLevel: 9,
   },
   senior: {
-    name: 'Сеньор',
+    name: 'Senior',
     reqLevel: 18,
   },
 }

@@ -1,4 +1,4 @@
-import { STAGE_NAMES } from '@/comments/constants'
+import { STAGE_NAMES } from '@/domains/comments/constants'
 
 export const protoComments = {
   [STAGE_NAMES.start]: {

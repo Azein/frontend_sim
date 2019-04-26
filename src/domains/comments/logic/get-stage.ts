@@ -1,4 +1,4 @@
-import { COMMENTING_STAGES } from '@/comments/constants'
+import { COMMENTING_STAGES } from '@/domains/comments/constants'
 
 const orderedStages = Object.entries(COMMENTING_STAGES).sort((a, b) => {
   const [key1, value1] = a

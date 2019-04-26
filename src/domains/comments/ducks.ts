@@ -1,6 +1,6 @@
 import { createAction, createReducer } from 'redux-act'
 import { assocPath, dissocPath } from 'ramda'
-import { eliminateTask } from '@/tasks/ducks'
+import { eliminateTask } from '@/domains/tasks/ducks'
 import { generateManagers } from './logic/generate-managers'
 import { MANAGERS_QTY } from './constants'
 

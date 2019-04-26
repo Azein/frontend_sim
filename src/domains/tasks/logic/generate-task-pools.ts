@@ -2,7 +2,7 @@ import {
   values, indexBy, prop, omit, keys,
 } from 'ramda'
 import { getRandomRange } from '@/utils'
-import { DEFAULT_TASKS_QTY } from '@/tasks/constants'
+import { DEFAULT_TASKS_QTY } from '@/domains/tasks/constants'
 
 type GenerateTaskPools = (categories: TaskCategories) => TaskPools
 

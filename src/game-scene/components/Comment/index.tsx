@@ -9,7 +9,7 @@ import Comment, {
   CommentEdited,
   // @ts-ignore
 } from '@atlaskit/comment'
-import { getComment } from '@/comments/selectors'
+import { getComment } from '@/domains/comments/selectors'
 import { CommentContainer } from './styled'
 
 type Props = { taskId: string; text?: string; author?: string }

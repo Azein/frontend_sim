@@ -1,23 +1,14 @@
 import React from 'react'
-import styled from '@/styled-components'
 import { connect } from 'react-redux'
-import { Layout } from '@/ui/components/Layout'
-import { togglePause, worldTick } from '@/world/WorldState'
-import { pausedSelector, timePassedSelector } from '@/world/selectors'
-import { allKeys } from '@/controls'
+import { togglePause, worldTick } from '@/domains/world/WorldState'
+import { pausedSelector, timePassedSelector } from '@/domains/world/selectors'
+import { allKeys } from '@/domains/controls'
 import TaskBox, { EmptyTaskBox } from './components/TaskBox'
-import { addTaskProgress, initStartingState } from '@/tasks/ducks'
-import { getTasks, existingKeysSelector } from '@/tasks/selectors'
-
-const SceneLayout = styled(Layout)`
-  padding: 20px;
-`
-const MainArea = styled(Layout)`
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: flex-start;
-  height: auto;
-`
+import { addTaskProgress, initStartingState } from '@/domains/tasks/ducks'
+import { getTasks, existingKeysSelector } from '@/domains/tasks/selectors'
+import {
+  Screen, SceneLayout, MainArea, HUDArea,
+} from './styled'
 
 interface Props {
   addProgress: (Payload: { taskKey: string; progress: number }) => void
@@ -99,18 +90,21 @@ class GameScene extends React.Component<Props> {
   render() {
     const { taskPools, timePassed } = this.props
     return (
-      <SceneLayout>
-        <MainArea>
-          {allKeys.map(
-            controlKey =>
-              (taskPools[controlKey] ? (
-                <TaskBox key={controlKey} {...taskPools[controlKey]} />
-              ) : (
-                <EmptyTaskBox key={`empty_${controlKey}`} />
-              )),
-          )}
-        </MainArea>
-      </SceneLayout>
+      <Screen>
+        <SceneLayout>
+          <MainArea>
+            {allKeys.map(
+              controlKey =>
+                (taskPools[controlKey] ? (
+                  <TaskBox key={controlKey} {...taskPools[controlKey]} />
+                ) : (
+                  <EmptyTaskBox key={`empty_${controlKey}`} />
+                )),
+            )}
+          </MainArea>
+        </SceneLayout>
+        <HUDArea />
+      </Screen>
     )
   }
 }
