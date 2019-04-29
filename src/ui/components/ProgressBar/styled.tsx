@@ -1,12 +1,12 @@
 import styled from '@/styled-components'
+import { animated } from 'react-spring'
 
-export const ProgressBar = styled('div')<{
-progressPercentage: number
-}>`
+const ProgressIndicator = styled('div')`
   height: 30px;
   max-width: 100%;
   flex-shrink: 0;
   flex-grow: 0;
   background-color: ${({ theme }) => theme.color.taskProgress};
-  width: ${({ progressPercentage }) => `${progressPercentage}%`};
 `
+
+export const AnimatedIndicator = animated(ProgressIndicator)

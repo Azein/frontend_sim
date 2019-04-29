@@ -14,6 +14,7 @@ export type RequestCommentAction = {
 export const taskCommentRequest = createAction(`${stateKey}/taskCommentRequest`)
 
 export const addComment = createAction(`${stateKey}/addComment`)
+export const deleteComment = createAction(`${stateKey}/deleteComment`)
 
 interface State {
   managers: string[]
@@ -33,6 +34,8 @@ export const commentsReducer = createReducer(
     [addComment.getType()]: (state, { taskId, comment }) =>
       assocPath(['comments', taskId], comment, state),
     [eliminateTask.getType()]: (state, { taskId }) =>
+      dissocPath(['comments', taskId], state),
+    [deleteComment.getType()]: (state, { taskId }) =>
       dissocPath(['comments', taskId], state),
   },
   initialState,

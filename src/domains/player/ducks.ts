@@ -1,14 +1,6 @@
 import { createReducer, createAction } from 'redux-act'
 import {
-  pipe,
-  over,
-  lensPath,
-  when,
-  propSatisfies,
-  add,
-  assoc,
-  prop,
-  subtract,
+  pipe, over, lensPath, when, propSatisfies, add,
 } from 'ramda'
 import devGrades, { DevGrade } from './devGrades'
 import { getNextLvlExp } from './logic/get-next-lvl'
@@ -63,11 +55,6 @@ const playerReducer = createReducer(
         when(
           propSatisfies(exp => exp >= state.toNextLvl, 'currentExp'),
           pipe(
-            // @ts-ignore
-            (x) => {
-              console.log('xd')
-              return x
-            },
             lvlUp,
             transferExpToNext,
             setNextLevel,
